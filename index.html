@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NIC Excel Formatter | VLTD Activation Data</title>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+<style>
+:root{
+  --bg:#f3f5f9;--surface:#ffffff;--surface2:#f7f9fc;--ink:#0f1c2e;--ink2:#41506a;--muted:#7a879b;
+  --line:#e3e8f0;--line2:#d3dbe7;
+  --brand:#1f4fd8;--brand-d:#173ea9;--brand-soft:#e8eefc;
+  --navy:#0c1b33;
+  --ok:#0f8a5f;--ok-soft:#e5f6ee;--warn:#b86e00;--warn-soft:#fff4de;--bad:#c0392b;--bad-soft:#fdeceb;
+  --shadow:0 1px 2px rgba(15,28,46,.05),0 8px 24px rgba(15,28,46,.05);
+  --radius:16px;
+  --font:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono","Cascadia Mono",Consolas,monospace;
+}
+@media(prefers-color-scheme:dark){
+  :root{--bg:#0b1220;--surface:#121b2d;--surface2:#16213a;--ink:#e8edf6;--ink2:#a9b6cc;--muted:#76849c;--line:#1f2c45;--line2:#2a3a58;
+  --brand:#5b8cff;--brand-d:#7aa0ff;--brand-soft:#17254a;--navy:#060d1a;--ok:#3ecf9a;--ok-soft:#0f2b25;--warn:#f0b04a;--warn-soft:#2c2410;--bad:#ff7b6e;--bad-soft:#2d1717;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25)}
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:14px;line-height:1.5}
+button,input{font-family:inherit}
+
+/* top bar */
+.top{background:var(--navy);color:#fff}
+.top-in{max-width:1320px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#3b6bff,#1b3fb8);display:grid;place-items:center;font-weight:800;font-size:14px;letter-spacing:.5px}
+.brand b{display:block;font-size:15px;letter-spacing:.2px}
+.brand span{font-size:11.5px;color:#9fb0cc}
+.badge{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;color:#b6f0d6;background:rgba(62,207,154,.12);border:1px solid rgba(62,207,154,.3);padding:6px 12px;border-radius:99px}
+.badge i{width:7px;height:7px;border-radius:50%;background:#3ecf9a;box-shadow:0 0 0 3px rgba(62,207,154,.25)}
+
+/* hero */
+.hero{background:linear-gradient(180deg,var(--navy) 0,var(--navy) 60%,transparent 60%);padding-bottom:0}
+.hero-in{max-width:1320px;margin:0 auto;padding:6px 28px 0}
+.hero h1{margin:0 0 8px;color:#fff;font-size:30px;line-height:1.15;letter-spacing:-.4px;font-weight:700}
+.hero p{margin:0;color:#a9b9d4;max-width:680px;font-size:14.5px}
+.hero p b{color:#fff;font-weight:600;font-family:var(--mono);font-size:13px;background:rgba(255,255,255,.09);padding:1px 6px;border-radius:5px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:0}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow);transition:.2s}
+.step .n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:13px;background:var(--surface2);color:var(--muted);border:1px solid var(--line2);flex:none;transition:.2s}
+.step b{display:block;font-size:13px}.step span{font-size:11.5px;color:var(--muted)}
+.step.active{border-color:var(--brand)}
+.step.active .n{background:var(--brand);color:#fff;border-color:var(--brand)}
+.step.done .n{background:var(--ok);color:#fff;border-color:var(--ok)}
+
+/* layout */
+main{max-width:none;padding:22px 28px 10px}
+.layout{display:grid;grid-template-columns:340px minmax(0,1fr);gap:22px;align-items:start}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.side{padding:20px;position:sticky;top:16px}
+.card h3{margin:0;font-size:14px;font-weight:700;letter-spacing:.1px}
+.side h3{margin-bottom:14px}
+
+.drop{border:1.5px dashed var(--line2);background:var(--surface2);border-radius:14px;padding:26px 16px;text-align:center;cursor:pointer;transition:.2s}
+.drop:hover,.drop.drag{border-color:var(--brand);background:var(--brand-soft)}
+.drop .ic{width:48px;height:48px;margin:0 auto 12px;border-radius:14px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center}
+.drop .ic svg{width:24px;height:24px}
+.drop strong{display:block;font-size:14px;margin-bottom:3px}
+.drop small{color:var(--muted);font-size:12px}
+.drop input{display:none}
+
+.fileinfo{display:none;margin-top:12px;padding:11px 12px;border:1px solid var(--line);background:var(--surface2);border-radius:11px;align-items:center;gap:11px}
+.fileinfo.show{display:flex}
+.fileinfo .fi{width:34px;height:34px;border-radius:9px;background:var(--ok-soft);color:var(--ok);display:grid;place-items:center;font-weight:800;font-size:10px;flex:none}
+.fileinfo div{min-width:0}
+.fileinfo b{display:block;font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fileinfo span{font-size:11.5px;color:var(--muted)}
+
+.btn{border:0;border-radius:11px;padding:12px 16px;font-weight:650;font-size:13.5px;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn svg{width:16px;height:16px}
+.primary{background:var(--brand);color:#fff}.primary:hover:not(:disabled){background:var(--brand-d)}
+.success{background:var(--ok);color:#fff}.success:hover:not(:disabled){filter:brightness(.93)}
+.ghost{background:transparent;color:var(--ink2);border:1px solid var(--line2)}.ghost:hover:not(:disabled){background:var(--surface2)}
+.full{width:100%;margin-top:12px}
+
+.message{display:none;margin-top:12px;border-radius:11px;padding:11px 13px;font-size:12.5px;line-height:1.5}
+.message.error{display:block;background:var(--bad-soft);color:var(--bad);border:1px solid color-mix(in srgb,var(--bad) 30%,transparent)}
+.message.ok{display:block;background:var(--ok-soft);color:var(--ok);border:1px solid color-mix(in srgb,var(--ok) 30%,transparent)}
+
+details.map{margin-top:18px;border-top:1px solid var(--line);padding-top:14px}
+details.map summary{cursor:pointer;font-size:12.5px;font-weight:650;list-style:none;display:flex;justify-content:space-between;align-items:center;color:var(--ink2)}
+details.map summary::-webkit-details-marker{display:none}
+details.map summary::after{content:"+";font-size:17px;color:var(--muted);line-height:1}
+details.map[open] summary::after{content:"–"}
+.mrow{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:12px}
+.mrow:last-child{border:0}
+.mrow code{font-family:var(--mono);font-size:11.5px;color:var(--brand);background:var(--brand-soft);padding:1px 7px;border-radius:6px;white-space:nowrap}
+.mrow span{color:var(--ink2);text-align:right}
+.note{margin:14px 0 0;font-size:11.5px;color:var(--muted);line-height:1.55;display:flex;gap:8px}
+.note svg{width:15px;height:15px;flex:none;margin-top:1px;color:var(--ok)}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:18px}
+.stat{padding:16px 18px;position:relative;overflow:hidden}
+.stat::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--c,var(--brand))}
+.stat span{display:block;font-size:11.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.6px}
+.stat b{display:block;font-size:28px;font-weight:700;letter-spacing:-.5px;font-variant-numeric:tabular-nums;margin:4px 0 2px}
+.stat small{font-size:11.5px;color:var(--muted)}
+.stat.s-odd{--c:#6d5bd0}.stat.s-even{--c:#16a0b8}.stat.s-total{--c:var(--brand)}
+.stat.s-warn{--c:var(--warn)}.stat.s-warn.hot b{color:var(--warn)}
+.stat.hot.s-gap b{color:var(--bad)}.stat.s-gap{--c:var(--bad)}
+
+/* table */
+.tcard{padding:0}
+.thead{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 20px;flex-wrap:wrap;border-bottom:1px solid var(--line);border-radius:var(--radius) var(--radius) 0 0;position:relative;z-index:5}
+.thead h3{display:flex;align-items:center;gap:10px}
+.sq{background:var(--brand-soft);color:var(--brand);font-size:11px;padding:2px 9px;border-radius:99px;font-weight:700}
+.searchbox{position:relative;width:300px;max-width:100%}
+.searchbox svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--muted)}
+.search{width:100%;border:1px solid var(--line2);background:var(--surface2);color:var(--ink);border-radius:10px;padding:10px 12px 10px 36px;font-size:13px;outline:none;transition:.15s}
+.search:focus{border-color:var(--brand);background:var(--surface);box-shadow:0 0 0 3px var(--brand-soft)}
+.search:disabled{opacity:.5}
+.twrap{overflow:auto;max-height:560px}
+table{border-collapse:separate;border-spacing:0;width:100%;min-width:980px;font-size:12.5px}
+th{position:sticky;top:0;z-index:1;background:var(--surface2);color:var(--ink2);text-align:left;padding:11px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--line2);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--line);white-space:nowrap;font-variant-numeric:tabular-nums}
+tbody tr:hover td{background:var(--surface2)}
+td.sno{color:var(--muted);font-weight:600}
+td.mono{font-family:var(--mono);font-size:12px}
+.status{display:inline-flex;align-items:center;gap:6px;border-radius:99px;padding:3px 10px;background:var(--ok-soft);color:var(--ok);font-size:11px;font-weight:700}
+.status::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.status.other{background:var(--surface2);color:var(--ink2);border:1px solid var(--line2)}
+.nm{display:inline-block;background:var(--warn-soft);color:var(--warn);font-size:11px;font-weight:700;padding:3px 9px;border-radius:7px}
+.empty{text-align:center;padding:64px 16px;color:var(--muted);white-space:normal}
+.empty .eic{width:56px;height:56px;margin:0 auto 14px;border-radius:16px;background:var(--surface2);border:1px solid var(--line);display:grid;place-items:center;color:var(--muted)}
+.empty .eic svg{width:26px;height:26px}
+.empty b{display:block;color:var(--ink2);font-size:14px;margin-bottom:3px}
+.tfoot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;border-top:1px solid var(--line);background:var(--surface);font-size:13px;color:var(--ink2);flex-wrap:wrap;border-radius:0 0 var(--radius) var(--radius)}
+.rpp{display:flex;align-items:center;gap:12px;font-weight:500}
+.rpp select{appearance:none;-webkit-appearance:none;border:1px solid var(--line2);background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%237a879b' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 11px center;color:var(--ink);border-radius:10px;padding:8px 34px 8px 13px;font-size:13px;font-weight:500;cursor:pointer;outline:none;min-width:76px}
+.rpp select:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
+/* vehicle mapping filter (custom dropdown) */
+.fdd{position:relative}
+.fbtn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 12px;border:1px solid var(--line2);background:var(--surface2);color:var(--ink);border-radius:10px;font-size:13px;font-weight:550;cursor:pointer;outline:none;transition:.15s;white-space:nowrap}
+.fbtn:hover{border-color:var(--brand)}
+.fbtn:focus-visible,.fdd.open .fbtn{border-color:var(--brand);background:var(--surface);box-shadow:0 0 0 3px var(--brand-soft)}
+.fbtn svg{width:15px;height:15px;flex:none;color:var(--muted)}
+.fbtn .chev{transition:transform .18s}
+.fdd.open .chev{transform:rotate(180deg)}
+.fbtn .fc{display:none;font-style:normal;font-size:11px;font-weight:700;min-width:22px;text-align:center;padding:1px 7px;border-radius:99px;background:var(--warn);color:#fff}
+.fbtn.on{border-color:var(--warn);background:var(--warn-soft);color:var(--warn);font-weight:650}
+.fbtn.on svg{color:var(--warn)}
+.fbtn.on .fc{display:inline-block}
+.fmenu{display:none;position:absolute;top:calc(100% + 8px);right:0;z-index:30;width:290px;max-width:calc(100vw - 28px);padding:6px;background:var(--surface);border:1px solid var(--line2);border-radius:14px;box-shadow:0 12px 32px rgba(15,28,46,.18),0 2px 6px rgba(15,28,46,.08)}
+.fdd.open .fmenu{display:block;animation:fpop .14s ease-out}
+@keyframes fpop{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.fmenu .fh{padding:8px 10px 6px;font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--muted)}
+.fo{width:100%;display:flex;align-items:center;gap:11px;padding:9px 10px;border:0;border-radius:10px;background:transparent;color:var(--ink);text-align:left;cursor:pointer;transition:.12s}
+.fo:hover{background:var(--surface2)}
+.fo.sel{background:var(--brand-soft)}
+.fo .dt{width:9px;height:9px;border-radius:50%;background:var(--d,var(--brand));flex:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--d,var(--brand)) 18%,transparent)}
+.fo span{flex:1;min-width:0}
+.fo strong{display:block;font-size:13px;font-weight:600}
+.fo small{display:block;font-size:11.5px;color:var(--muted);margin-top:1px}
+.fo b{font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink2);background:var(--surface2);border:1px solid var(--line);padding:1px 8px;border-radius:99px}
+.fo.sel b{background:var(--brand);border-color:var(--brand);color:#fff}
+.fsep{height:1px;background:var(--line);margin:5px 6px}
+.pager{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pg{min-width:34px;height:34px;padding:0 9px;border-radius:9px;border:1px solid var(--line2);background:var(--surface);color:var(--brand);font-size:13px;font-weight:600;cursor:pointer;display:inline-grid;place-items:center;transition:.15s}
+.pg svg{width:15px;height:15px}
+.pg:hover:not(:disabled):not(.on){background:var(--brand-soft)}
+.pg.on{background:var(--brand);border-color:var(--brand);color:#fff;cursor:default}
+.pg:disabled{color:var(--line2);border-color:var(--line);cursor:not-allowed;background:var(--surface)}
+.dots{color:var(--muted);padding:0 2px}
+.cnt{font-size:12px;color:var(--muted);font-weight:500}
+.clearbtn{padding:9px 14px;font-size:12.5px}
+
+/* excel preview modal */
+.mo{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(8,16,32,.55);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.mo.show{display:flex;animation:mfade .18s ease-out}
+@keyframes mfade{from{opacity:0}to{opacity:1}}
+.md{width:min(1040px,100%);max-height:calc(100vh - 40px);display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 70px rgba(0,0,0,.35);overflow:hidden;animation:mpop .26s cubic-bezier(.2,.9,.3,1.15)}
+@keyframes mpop{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+.mhead{display:flex;align-items:center;gap:13px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.xi{width:40px;height:40px;border-radius:11px;background:var(--ok-soft);color:var(--ok);display:grid;place-items:center;font-weight:800;font-size:11px;letter-spacing:.3px;flex:none}
+.mtxt{min-width:0;flex:1}
+.mtxt b{display:block;font-size:14.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mtxt span{font-size:12px;color:var(--muted)}
+.mx{width:34px;height:34px;border-radius:9px;border:1px solid var(--line2);background:transparent;color:var(--ink2);cursor:pointer;display:grid;place-items:center;flex:none}
+.mx:hover{background:var(--surface2)}
+.mx svg{width:16px;height:16px}
+.pv{display:flex;flex-direction:column;min-height:0;flex:1}
+.mbody{overflow:auto;flex:1;min-height:200px;background:var(--surface)}
+.xt{min-width:900px}
+.xt th{background:#0c1b33;color:#fff;border-bottom:3px solid var(--brand);text-align:center;padding:12px 14px;font-size:11px}
+.xt tbody tr:nth-child(even) td{background:var(--surface2)}
+.xt tbody tr:hover td{background:var(--brand-soft)}
+.xt td.c{text-align:center}
+.mfoot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;border-top:1px solid var(--line);flex-wrap:wrap}
+.mfoot .note2{font-size:12px;color:var(--muted)}
+.macts{display:flex;gap:10px}
+.okv{display:none;flex-direction:column;align-items:center;text-align:center;padding:48px 24px 40px}
+.mo.done .pv{display:none}
+.mo.done .okv{display:flex}
+.mo.done .md{width:min(460px,100%)}
+.okic{position:relative;width:104px;height:104px;margin-bottom:18px;animation:okpop .55s cubic-bezier(.2,.9,.3,1.3)}
+.okic::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--ok);opacity:0;animation:ripple 1.3s .45s ease-out 2}
+@keyframes okpop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes ripple{0%{transform:scale(.9);opacity:.55}100%{transform:scale(1.5);opacity:0}}
+.okic svg{width:104px;height:104px;overflow:visible}
+.okc{fill:var(--ok-soft);stroke:var(--ok);stroke-width:4;stroke-dasharray:277;stroke-dashoffset:277;animation:draw .7s ease forwards}
+.okp{fill:none;stroke:var(--ok);stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:draw .4s .55s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.okv h3{margin:0 0 6px;font-size:21px;letter-spacing:-.2px;animation:rise .5s .6s both}
+.okv p{margin:0 0 20px;color:var(--ink2);font-size:13.5px;animation:rise .5s .7s both;word-break:break-word}
+.okv p b{color:var(--ok);font-variant-numeric:tabular-nums}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.bar{width:min(320px,100%);height:6px;border-radius:99px;background:var(--surface2);border:1px solid var(--line);overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ok),#3ecf9a);border-radius:99px}
+.bar i.run{animation:fill 5s linear forwards}
+.bar i.full{width:100%}
+@keyframes fill{to{width:100%}}
+@media(max-width:700px){.mo{padding:10px}.mhead,.mfoot{padding:12px 14px}.macts{width:100%}.macts .btn{flex:1}}
+
+footer{text-align:center;color:var(--muted);font-size:11.5px;padding:22px 16px 30px}
+
+@media(max-width:1000px){.layout{grid-template-columns:1fr}.side{position:static}}
+@media(max-width:700px){
+  .top-in,.hero-in,main{padding-left:14px;padding-right:14px}
+  .badge{display:none}
+  .hero h1{font-size:23px}
+  .steps{grid-template-columns:1fr;gap:8px}
+  .step{padding:10px 12px}
+  .stats{grid-template-columns:repeat(2,1fr);gap:10px}
+  .stat b{font-size:22px}
+  .searchbox{width:100%}
+  .thead{padding:14px}
+  .fmenu{right:auto;left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="top-in">
+  <div class="brand"><div class="logo">VL</div><div><b>NIC Excel Formatter</b><span>VLTD Activation Data · Odd / Even Record Arranger</span></div></div>
+  <div class="badge"><i></i>Processed locally in your browser</div>
+</div></div>
+
+<div class="hero"><div class="hero-in">
+  <div class="steps">
+    <div class="step active" id="st1"><div class="n">1</div><div><b>Upload</b><span>Select the NIC .xlsx / .xls</span></div></div>
+    <div class="step" id="st2"><div class="n">2</div><div><b>Process</b><span>Arrange Odd &amp; Even records</span></div></div>
+    <div class="step" id="st3"><div class="n">3</div><div><b>Download</b><span>Get the final Excel</span></div></div>
+  </div>
+</div></div>
+
+<main>
+  <div class="layout">
+    <aside class="card side">
+      <h3>Source file</h3>
+      <div class="drop" id="drop">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg></div>
+        <strong>Choose a file or drop it here</strong>
+        <small>.xlsx or .xls</small>
+        <input type="file" id="file" accept=".xlsx,.xls">
+      </div>
+      <div class="fileinfo" id="fileinfo"></div>
+      <button class="btn primary full" id="process" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span id="processLabel">Process Excel File</span>
+      </button>
+      <button class="btn success full" id="download" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5"/><path d="M4 18v1a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-1"/></svg>Download Final Excel
+      </button>
+      <div class="message" id="message"></div>
+
+      <details class="map">
+        <summary>Source column mapping</summary>
+        <div style="margin-top:8px">
+          <div class="mrow"><code>odd / even</code><span>S.No.</span></div>
+          <div class="mrow"><code>sorting_1</code><span>IMEI No. (both)</span></div>
+          <div class="mrow"><code>odd 2 / even 2</code><span>Device Serial No.</span></div>
+          <div class="mrow"><code>odd 3 / even 3</code><span>Activation Status</span></div>
+          <div class="mrow"><code>odd 4 / even 4</code><span>Activation Date</span></div>
+          <div class="mrow"><code>odd 5 / even 5</code><span>Vehicle Reg No (VLTD)</span></div>
+          <div class="mrow"><code>odd 6 / even 6</code><span>Vehicle Reg No (Vahan)</span></div>
+        </div>
+      </details>
+      <p class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Your file never leaves this device. Keep the source column order consistent with the mapping above.</span></p>
+    </aside>
+
+    <section style="min-width:0">
+      <div class="stats">
+        <div class="card stat s-total"><span>Total records</span><b id="total">0</b><small>After removing duplicates</small></div>
+        <div class="card stat s-odd"><span>Odd records</span><b id="oddCount">0</b><small>From the Odd block</small></div>
+        <div class="card stat s-even"><span>Even records</span><b id="evenCount">0</b><small>From the Even block</small></div>
+        <div class="card stat s-warn" id="cMissing"><span>Mapping missing</span><b id="missing">0</b><small>VLTD vehicle number blank</small></div>
+        <div class="card stat s-gap" id="cOdd"><span>Odd S.No. missing</span><b id="oddMissing">0</b><small>Gaps in odd sequence</small></div>
+        <div class="card stat s-gap" id="cEven"><span>Even S.No. missing</span><b id="evenMissing">0</b><small>Gaps in even sequence</small></div>
+      </div>
+
+      <div class="card tcard">
+        <div class="thead">
+          <h3>Final data preview <span class="sq" id="sq">0</span> <span class="cnt" id="showing">No records loaded</span></h3>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><div class="fdd" id="fdd">
+            <input type="hidden" id="vfilter" value="all">
+            <button class="fbtn" id="fbtn" type="button" aria-haspopup="listbox" aria-expanded="false">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></svg>
+              <span id="flabel">All records</span><em class="fc" id="fcount">0</em>
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="fmenu" id="fmenu" role="listbox" aria-label="Vehicle mapping filter">
+              <div class="fh">Vehicle mapping</div>
+              <button type="button" class="fo sel" role="option" data-v="all" style="--d:var(--brand)"><i class="dt"></i><span><strong>All records</strong><small>No filter applied</small></span><b>0</b></button>
+              <div class="fsep"></div>
+              <button type="button" class="fo" role="option" data-v="vltd" style="--d:var(--warn)"><i class="dt"></i><span><strong>VLTD Not Mapped</strong><small>Vehicle Reg No (VLTD) blank</small></span><b>0</b></button>
+              <button type="button" class="fo" role="option" data-v="vahan" style="--d:#d9480f"><i class="dt"></i><span><strong>Vahan Not Mapped</strong><small>Vehicle Reg No (Vahan) blank</small></span><b>0</b></button>
+              <button type="button" class="fo" role="option" data-v="either" style="--d:var(--bad)"><i class="dt"></i><span><strong>Any Not Mapped</strong><small>VLTD or Vahan blank</small></span><b>0</b></button>
+              <div class="fsep"></div>
+              <button type="button" class="fo" role="option" data-v="mapped" style="--d:var(--ok)"><i class="dt"></i><span><strong>Fully Mapped</strong><small>Both vehicle numbers present</small></span><b>0</b></button>
+            </div>
+          </div><button class="btn ghost clearbtn" id="clear" disabled>Clear</button>
+          <div class="searchbox">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <input class="search" id="search" placeholder="Search IMEI, serial or vehicle no." disabled>
+          </div></div>
+        </div>
+        <div class="twrap">
+          <table>
+            <thead><tr><th>S.No.</th><th>IMEI No.</th><th>Device Serial No.</th><th>Activation Status</th><th>Activation Date</th><th>Vehicle Reg No (VLTD)</th><th>Vehicle Reg No (Vahan)</th></tr></thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+        <div class="tfoot">
+          <div class="rpp">Rows per page
+            <select id="perPage"><option>10</option><option>25</option><option>50</option><option>100</option><option>500</option><option>1000</option></select>
+          </div>
+          <div class="pager" id="pager"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+<div class="mo" id="mo" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="md">
+    <div class="mhead">
+      <div class="xi">XLSX</div>
+      <div class="mtxt"><b id="mTitle">Final.xlsx</b><span id="mMeta"></span></div>
+      <button class="mx" id="mClose" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="pv">
+      <div class="mbody"><table class="xt"><thead id="mHead"></thead><tbody id="mBody"></tbody></table></div>
+      <div class="mfoot">
+        <span class="note2" id="mNote"></span>
+        <div class="macts">
+          <button class="btn ghost" id="mCancel" type="button">Close</button>
+          <button class="btn success" id="mDl" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5"/><path d="M4 18v1a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-1"/></svg>Download Excel</button>
+        </div>
+      </div>
+    </div>
+    <div class="okv">
+      <div class="okic"><svg viewBox="0 0 96 96"><circle class="okc" cx="48" cy="48" r="44"/><path class="okp" d="M29 50l14 14 25-28"/></svg></div>
+      <h3 id="okTitle">Download Successfully</h3>
+      <p id="okSub">Your download will start in <b id="cd">5</b> seconds</p>
+      <div class="bar"><i id="barfill"></i></div>
+      <button class="btn ghost" id="mCancel2" type="button">Cancel</button>
+    </div>
+  </div>
+</div>
+<footer>NIC Excel Formatter · Final output: 7-column VLTD activation register</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+let sourceFile=null, finalRows=[], workbookName="Final_Data";
+const headers=["S.No.","IMEI No.","Device Serial No.","Activation Status","Activation Date","Vehicle Reg No(VLTD)","Vehicle Reg No(Vahan)"];
+const clean=v => v===null||v===undefined ? "" : String(v).trim();
+const EMPTY='<tr><td colspan="7" class="empty"><div class="eic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div><b>No records yet</b>Upload a NIC Excel file to see the arranged records.</td></tr>';
+
+function setStep(n){
+  [1,2,3].forEach(i=>{const s=$("st"+i);s.classList.toggle("done",i<n);s.classList.toggle("active",i===n);
+    s.querySelector(".n").textContent=i<n?"✓":i;});
+}
+function showMessage(text,type){const m=$("message");m.textContent=text;m.className="message "+type;}
+function setStats(t,o,e,m,og,eg){
+  $("total").textContent=t;$("oddCount").textContent=o;$("evenCount").textContent=e;
+  $("missing").textContent=m;$("oddMissing").textContent=og;$("evenMissing").textContent=eg;
+  $("sq").textContent=t;
+  $("cMissing").classList.toggle("hot",m!=="0");
+  $("cOdd").classList.toggle("hot",og!=="0");
+  $("cEven").classList.toggle("hot",eg!=="0");
+}
+function resetStats(){setStats("0","0","0","0","0","0");}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+
+function setFile(file){
+  if(!file)return;
+  if(!/\.(xlsx|xls)$/i.test(file.name)){showMessage("Please select a valid .xlsx or .xls file.","error");return;}
+  sourceFile=file;fileMeta={name:file.name,size:file.size};
+  const fi=$("fileinfo");fi.classList.add("show");
+  fi.innerHTML='<div class="fi">XLS</div><div><b>'+escapeHtml(file.name)+'</b><span>'+(file.size/1024).toFixed(1)+' KB</span></div>';
+  $("process").disabled=false;$("download").disabled=true;$("search").disabled=true;$("clear").disabled=false;
+  $("processLabel").textContent="Process Excel File";
+  finalRows=[];page=1;resetStats();render();setStep(2);
+  showMessage("File selected. Click Process Excel File to arrange the records.","ok");
+}
+$("drop").addEventListener("click",()=>$("file").click());
+$("file").addEventListener("change",e=>setFile(e.target.files[0]));
+["dragenter","dragover"].forEach(ev=>$("drop").addEventListener(ev,e=>{e.preventDefault();$("drop").classList.add("drag");}));
+["dragleave","drop"].forEach(ev=>$("drop").addEventListener(ev,e=>{e.preventDefault();$("drop").classList.remove("drag");}));
+$("drop").addEventListener("drop",e=>setFile(e.dataTransfer.files[0]));
+function parseDate(v){return clean(v);}
+
+$("process").addEventListener("click",async()=>{
+ if(!sourceFile)return;
+ if(typeof XLSX==="undefined"){showMessage("Excel reader library could not load. Please check your internet connection and refresh the page.","error");return;}
+ try{
+  const buf=await sourceFile.arrayBuffer();
+  const wb=XLSX.read(buf,{type:"array",cellDates:false});
+  const sheet=wb.Sheets[wb.SheetNames[0]];
+  const data=XLSX.utils.sheet_to_json(sheet,{header:1,raw:false,defval:""});
+  if(!data.length)throw new Error("The selected worksheet is empty.");
+  // NIC source layout: A=odd S.No.; B=sorting_1 IMEI; C:G=odd details.
+  // H=even S.No.; B=sorting_1 IMEI on the same row; I:M=even details.
+  const oddRows=[],evenRows=[];
+  for(let r=1;r<data.length;r++){
+    const row=data[r]||[];
+    const oddNo=clean(row[0]), evenNo=clean(row[7]), imei=clean(row[1]);
+    if(oddNo!==""){
+      oddRows.push([oddNo,imei,clean(row[2]),clean(row[3]),parseDate(row[4]),clean(row[5]),clean(row[6])]);
+    }
+    if(evenNo!==""){
+      evenRows.push([evenNo,imei,clean(row[8]),clean(row[9]),parseDate(row[10]),clean(row[11]),clean(row[12])]);
+    }
+  }
+  const all=oddRows.concat(evenRows).filter(r=>r[0]!==""||r[2]!=="");
+  all.sort((a,b)=>(Number(a[0])||0)-(Number(b[0])||0));
+  // Remove duplicate S.No. + device serial combinations only; preserve distinct device rows.
+  const seen=new Set();
+  finalRows=all.filter(r=>{const k=clean(r[0])+"|"+clean(r[2]);if(seen.has(k))return false;seen.add(k);return true;});
+  if(!finalRows.length)throw new Error("No Odd or Even records found. Please check that the source columns match the mapping.");
+  const oddSet=new Set(oddRows.map(r=>Number(r[0])).filter(n=>Number.isInteger(n)&&n>0));
+  const evenSet=new Set(evenRows.map(r=>Number(r[0])).filter(n=>Number.isInteger(n)&&n>0));
+  const maxOdd=oddSet.size?Math.max(...oddSet):0;
+  const maxEven=evenSet.size?Math.max(...evenSet):0;
+  let oddGap=0, evenGap=0;
+  for(let n=1;n<=maxOdd;n+=2)if(!oddSet.has(n))oddGap++;
+  for(let n=2;n<=maxEven;n+=2)if(!evenSet.has(n))evenGap++;
+  const f=n=>n.toLocaleString("en-IN");
+  setStats(f(finalRows.length),f(oddRows.length),f(evenRows.length),f(finalRows.filter(r=>!r[5]).length),f(oddGap),f(evenGap));
+  $("download").disabled=false;$("search").disabled=false;$("processLabel").textContent="Process Again";
+  workbookName=sourceFile.name.replace(/\.(xlsx|xls)$/i,"");
+  page=1;render();setStep(3);saveState();
+  showMessage("Successfully arranged "+f(finalRows.length)+" records. IMEI values were read from sorting_1 for both Odd and Even rows. Mapping Missing counts records where Vehicle Reg No (VLTD) is blank.","ok");
+ }catch(err){showMessage(err.message||"Unable to process this workbook.","error");}
+});
+
+let page=1, perPage=10;
+const IC={
+ first:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 17l-5-5 5-5M18 17l-5-5 5-5"/></svg>',
+ prev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
+ next:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>',
+ last:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 17l5-5-5-5M6 17l5-5-5-5"/></svg>'
+};
+function renderPager(pages){
+ const nums=[];
+ for(let p=1;p<=pages;p++){
+   if(p===1||p===pages||Math.abs(p-page)<=1||(page<=3&&p<=4)||(page>=pages-2&&p>=pages-3))nums.push(p);
+   else if(nums[nums.length-1]!=="…")nums.push("…");
+ }
+ const dis=(page<=1)?" disabled":"", disN=(page>=pages)?" disabled":"";
+ $("pager").innerHTML=
+  '<button class="pg" data-p="1" aria-label="First page"'+dis+'>'+IC.first+'</button>'+
+  '<button class="pg" data-p="'+(page-1)+'" aria-label="Previous page"'+dis+'>'+IC.prev+'</button>'+
+  nums.map(p=>p==="…"?'<span class="dots">…</span>':'<button class="pg'+(p===page?' on':'')+'" data-p="'+p+'">'+p+'</button>').join("")+
+  '<button class="pg" data-p="'+(page+1)+'" aria-label="Next page"'+disN+'>'+IC.next+'</button>'+
+  '<button class="pg" data-p="'+pages+'" aria-label="Last page"'+disN+'>'+IC.last+'</button>';
+}
+$("pager").addEventListener("click",e=>{const b=e.target.closest(".pg");if(!b||b.disabled)return;page=Number(b.dataset.p);render();document.querySelector(".twrap").scrollTo({top:0});});
+$("perPage").addEventListener("change",e=>{perPage=Number(e.target.value);page=1;render();});
+
+function render(){
+ const q=$("search").value.toLowerCase().trim();
+ const vf=$("vfilter").value;
+ const vOk=r=>vf==="all"||(vf==="vltd"&&!clean(r[5]))||(vf==="vahan"&&!clean(r[6]))||(vf==="either"&&(!clean(r[5])||!clean(r[6])))||(vf==="mapped"&&clean(r[5])&&clean(r[6]));
+ syncFilterUI(vf);
+ const rows=finalRows.filter(r=>vOk(r)&&(!q||r.some(v=>clean(v).toLowerCase().includes(q))));
+ if(!finalRows.length){$("tbody").innerHTML=EMPTY;$("showing").textContent="No records loaded";renderPager(1);return;}
+ const pages=Math.max(1,Math.ceil(rows.length/perPage));
+ if(page>pages)page=pages;
+ const start=(page-1)*perPage;
+ $("tbody").innerHTML=rows.length?rows.slice(start,start+perPage).map(r=>"<tr>"+r.map((v,i)=>{
+   const vehicleCol=(i===5||i===6), blank=!clean(v);
+   let inner;
+   if(i===3) inner=clean(v).toUpperCase()==="ACTIVATED"?"<span class='status'>"+escapeHtml(v)+"</span>":(blank?"":"<span class='status other'>"+escapeHtml(v)+"</span>");
+   else if(vehicleCol&&blank) inner="<span class='nm'>Not Mapped</span>";
+   else inner=escapeHtml(v);
+   const cls=i===0?"sno":(i===1||i===2?"mono":"");
+   return "<td"+(cls?" class='"+cls+"'":"")+">"+inner+"</td>";
+ }).join("")+"</tr>").join(""):"<tr><td colspan='7' class='empty'><b>No matching records</b>Try a different search term.</td></tr>";
+ $("showing").textContent=rows.length?("Showing "+(start+1).toLocaleString("en-IN")+"–"+Math.min(start+perPage,rows.length).toLocaleString("en-IN")+" of "+rows.length.toLocaleString("en-IN")):"0 results";
+ renderPager(pages);
+}
+$("search").addEventListener("input",()=>{page=1;render();});
+/* ---- Vehicle mapping filter dropdown ---- */
+const FLABEL={all:"All records",vltd:"VLTD Not Mapped",vahan:"Vahan Not Mapped",either:"Any Not Mapped",mapped:"Fully Mapped"};
+function syncFilterUI(vf){
+ const c={all:finalRows.length,vltd:0,vahan:0,either:0,mapped:0};
+ finalRows.forEach(r=>{const a=!clean(r[5]),b=!clean(r[6]);if(a)c.vltd++;if(b)c.vahan++;if(a||b)c.either++;else c.mapped++;});
+ document.querySelectorAll("#fmenu .fo").forEach(o=>{
+   const v=o.dataset.v;
+   o.classList.toggle("sel",v===vf);o.setAttribute("aria-selected",v===vf?"true":"false");
+   o.querySelector("b").textContent=c[v].toLocaleString("en-IN");
+ });
+ $("flabel").textContent=FLABEL[vf]||FLABEL.all;
+ $("fbtn").classList.toggle("on",vf!=="all");
+ $("fcount").textContent=(c[vf]||0).toLocaleString("en-IN");
+}
+function setFMenu(open){$("fdd").classList.toggle("open",open);$("fbtn").setAttribute("aria-expanded",open?"true":"false");}
+$("fbtn").addEventListener("click",e=>{e.stopPropagation();setFMenu(!$("fdd").classList.contains("open"));});
+$("fmenu").addEventListener("click",e=>{
+ const o=e.target.closest(".fo");if(!o)return;
+ $("vfilter").value=o.dataset.v;page=1;setFMenu(false);render();
+});
+document.addEventListener("click",e=>{if(!$("fdd").contains(e.target))setFMenu(false);});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){setFMenu(false);if($("mo").classList.contains("show"))closePreview();}});
+
+/* ---- Excel build (styled), preview popup, animated download ---- */
+const MIME="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+const PREVIEW_N=100;
+const outName=()=>workbookName+"_FINAL_FORMAT.xlsx";
+const mapRow=r=>r.map((v,i)=>((i===5||i===6)&&!clean(v))?"Not Mapped":v);
+
+async function buildExcel(){
+ const rows=finalRows.map(mapRow);
+ // Fallback: plain workbook if the styling library could not load
+ if(typeof ExcelJS==="undefined"){
+  const ws=XLSX.utils.aoa_to_sheet([headers,...rows]);
+  ws["!cols"]=[{wch:10},{wch:21},{wch:27},{wch:22},{wch:22},{wch:25},{wch:27}];
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Final Data");
+  return new Blob([XLSX.write(wb,{bookType:"xlsx",type:"array"})],{type:MIME});
+ }
+ const wb=new ExcelJS.Workbook();wb.creator="NIC Excel Formatter";wb.created=new Date();
+ const ws=wb.addWorksheet("Final Data",{views:[{state:"frozen",ySplit:1,showGridLines:false}],properties:{tabColor:{argb:"FF1F4FD8"}}});
+ const widths=[9,22,27,20,20,24,24];
+ ws.columns=headers.map((h,i)=>({header:h,key:"c"+i,width:widths[i]}));
+ const hr=ws.getRow(1);hr.height=30;
+ hr.eachCell(c=>{
+  c.font={name:"Calibri",size:11,bold:true,color:{argb:"FFFFFFFF"}};
+  c.fill={type:"pattern",pattern:"solid",fgColor:{argb:"FF0C1B33"}};
+  c.alignment={vertical:"middle",horizontal:"center"};
+  c.border={bottom:{style:"medium",color:{argb:"FF1F4FD8"}}};
+ });
+ const line={bottom:{style:"thin",color:{argb:"FFE3E8F0"}}};
+ rows.forEach((r,idx)=>{
+  const n=Number(r[0]);
+  const row=ws.addRow([(Number.isInteger(n)&&String(n)===clean(r[0]))?n:r[0],...r.slice(1)]);
+  row.height=22;
+  row.eachCell({includeEmpty:true},(c,ci)=>{
+   c.font={name:"Calibri",size:11,color:{argb:"FF1D2939"}};
+   c.alignment={vertical:"middle",horizontal:(ci===1||ci===4||ci===5)?"center":"left"};
+   c.border=line;
+   if(idx%2===1)c.fill={type:"pattern",pattern:"solid",fgColor:{argb:"FFF7F9FC"}};
+   if(ci===2||ci===3)c.numFmt="@";
+  });
+  if(clean(r[3]).toUpperCase()==="ACTIVATED"){
+   const c=row.getCell(4);
+   c.font={name:"Calibri",size:11,bold:true,color:{argb:"FF0F8A5F"}};
+   c.fill={type:"pattern",pattern:"solid",fgColor:{argb:"FFE5F6EE"}};
+  }
+  [6,7].forEach(ci=>{
+   const c=row.getCell(ci);
+   if(c.value==="Not Mapped"){
+    c.font={name:"Calibri",size:11,bold:true,color:{argb:"FFB86E00"}};
+    c.fill={type:"pattern",pattern:"solid",fgColor:{argb:"FFFFF4DE"}};
+    c.alignment={vertical:"middle",horizontal:"center"};
+   }
+  });
+ });
+ ws.autoFilter={from:{row:1,column:1},to:{row:rows.length+1,column:7}};
+ ws.pageSetup={orientation:"landscape",fitToPage:true,fitToWidth:1,fitToHeight:0};
+ const buf=await wb.xlsx.writeBuffer();
+ return new Blob([buf],{type:MIME});
+}
+function saveBlob(blob,name){
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),5000);
+}
+
+let dlTimer=null,dlTick=null,dlPromise=null;
+function previewCell(v,i){
+ const blank=!clean(v);
+ if(i===3)return clean(v).toUpperCase()==="ACTIVATED"?"<span class='status'>"+escapeHtml(v)+"</span>":(blank?"":"<span class='status other'>"+escapeHtml(v)+"</span>");
+ if((i===5||i===6)&&blank)return "<span class='nm'>Not Mapped</span>";
+ return escapeHtml(v);
+}
+function openPreview(){
+ if(!finalRows.length)return;
+ $("mTitle").textContent=outName();
+ $("mMeta").textContent=finalRows.length.toLocaleString("en-IN")+" rows · 7 columns · Sheet: Final Data";
+ $("mHead").innerHTML="<tr>"+headers.map(h=>"<th>"+escapeHtml(h)+"</th>").join("")+"</tr>";
+ const shown=finalRows.slice(0,PREVIEW_N);
+ $("mBody").innerHTML=shown.map(r=>"<tr>"+r.map((v,i)=>{
+  const cls=i===0?"sno c":(i===1||i===2?"mono":(i===3||i===4?"c":""));
+  return "<td"+(cls?" class='"+cls+"'":"")+">"+previewCell(v,i)+"</td>";
+ }).join("")+"</tr>").join("");
+ $("mNote").textContent=finalRows.length>PREVIEW_N?("Preview shows the first "+PREVIEW_N+" of "+finalRows.length.toLocaleString("en-IN")+" rows. The downloaded file has all rows."):"Preview of the complete file.";
+ $("mo").classList.remove("done");$("mDl").disabled=false;
+ $("mo").classList.add("show");
+ $("mDl").focus();
+}
+function closePreview(){
+ clearTimeout(dlTimer);clearInterval(dlTick);dlTimer=dlTick=null;dlPromise=null;
+ $("mo").classList.remove("show","done");
+}
+function startDownload(){
+ $("mDl").disabled=true;
+ let left=5;
+ $("okTitle").textContent="Download Successfully";
+ $("okSub").innerHTML="Your download will start in <b id='cd'>5</b> seconds";
+ $("mCancel2").textContent="Cancel";
+ const bar=$("barfill");bar.className="";void bar.offsetWidth;bar.classList.add("run");
+ $("mo").classList.add("done");
+ dlPromise=buildExcel();dlPromise.catch(()=>{});
+ dlTick=setInterval(()=>{left--;const cd=$("cd");if(cd&&left>0)cd.textContent=left;},1000);
+ dlTimer=setTimeout(async()=>{
+  clearInterval(dlTick);dlTick=null;
+  try{
+   const blob=await dlPromise;
+   saveBlob(blob,outName());
+   $("okSub").textContent="Saved as "+outName();
+   $("barfill").className="full";
+   $("mCancel2").textContent="Done";
+  }catch(err){
+   $("okTitle").textContent="Download failed";
+   $("okSub").textContent=(err&&err.message)||"Could not create the Excel file.";
+   $("barfill").className="";
+   $("mCancel2").textContent="Close";
+  }
+ },5000);
+}
+$("download").addEventListener("click",openPreview);
+$("mDl").addEventListener("click",startDownload);
+$("mClose").addEventListener("click",closePreview);
+$("mCancel").addEventListener("click",closePreview);
+$("mCancel2").addEventListener("click",closePreview);
+$("mo").addEventListener("click",e=>{if(e.target===$("mo"))closePreview();});
+
+$("clear").addEventListener("click",()=>{
+ sourceFile=null;fileMeta=null;finalRows=[];DB.del("state").catch(()=>{});$("file").value="";$("fileinfo").classList.remove("show");
+ $("process").disabled=true;$("download").disabled=true;$("search").disabled=true;$("search").value="";
+ $("processLabel").textContent="Process Excel File";$("clear").disabled=true;
+ page=1;$("vfilter").value="all";resetStats();render();setStep(1);$("message").className="message";$("message").textContent="";
+});
+
+/* ---- Persistence: processed data survives page reload (IndexedDB, in this browser only) ---- */
+let fileMeta=null;
+const DB={
+ open(){return new Promise((res,rej)=>{const r=indexedDB.open("nicFormatter",1);r.onupgradeneeded=()=>r.result.createObjectStore("kv");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});},
+ async get(k){const db=await this.open();return new Promise((res,rej)=>{const q=db.transaction("kv","readonly").objectStore("kv").get(k);q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error);});},
+ async set(k,v){const db=await this.open();return new Promise((res,rej)=>{const t=db.transaction("kv","readwrite");t.objectStore("kv").put(v,k);t.oncomplete=()=>res();t.onerror=()=>rej(t.error);});},
+ async del(k){const db=await this.open();return new Promise((res,rej)=>{const t=db.transaction("kv","readwrite");t.objectStore("kv").delete(k);t.oncomplete=()=>res();t.onerror=()=>rej(t.error);});}
+};
+function saveState(){
+ const stats=["total","oddCount","evenCount","missing","oddMissing","evenMissing"].map(id=>$(id).textContent);
+ DB.set("state",{finalRows,stats,fileMeta,workbookName,perPage,savedAt:Date.now()}).catch(()=>{});
+}
+async function restoreState(){
+ try{
+  const s=await DB.get("state");
+  if(!s||!s.finalRows||!s.finalRows.length)return;
+  finalRows=s.finalRows;workbookName=s.workbookName||"Final_Data";fileMeta=s.fileMeta||null;
+  if(s.perPage){perPage=s.perPage;$("perPage").value=String(perPage);}
+  setStats(...s.stats);
+  if(fileMeta){const fi=$("fileinfo");fi.classList.add("show");fi.innerHTML='<div class="fi">XLS</div><div><b>'+escapeHtml(fileMeta.name)+'</b><span>'+(fileMeta.size/1024).toFixed(1)+' KB · restored</span></div>';}
+  $("download").disabled=false;$("search").disabled=false;$("clear").disabled=false;
+  $("processLabel").textContent="Process Excel File";
+  page=1;render();setStep(3);
+  showMessage("Previous data restored ("+finalRows.length.toLocaleString("en-IN")+" records). Click Clear to remove it, or upload a new file.","ok");
+ }catch(e){}
+}
+resetStats();render();restoreState();
+</script>
+</body>
+</html>
