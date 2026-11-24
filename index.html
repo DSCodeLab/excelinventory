@@ -35,6 +35,23 @@ button,input{font-family:inherit}
 .logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#3b6bff,#1b3fb8);display:grid;place-items:center;font-weight:800;font-size:14px;letter-spacing:.5px}
 .brand b{display:block;font-size:15px;letter-spacing:.2px}
 .brand span{font-size:11.5px;color:#9fb0cc}
+.top{position:relative;z-index:60}
+.psel{position:relative}
+.pbtn{display:inline-flex;align-items:center;gap:9px;height:38px;padding:0 14px 0 14px;border-radius:11px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:#fff;font-size:13px;cursor:pointer;transition:.15s}
+.pbtn:hover,.psel.open .pbtn{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.34)}
+.pbtn .pk{font-size:11px;color:#9fb0cc;font-weight:600;letter-spacing:.3px;text-transform:uppercase}
+.pbtn b{font-weight:700}
+.pbtn svg{width:15px;height:15px;color:#9fb0cc;transition:transform .18s}
+.psel.open .pbtn svg{transform:rotate(180deg)}
+.pmenu{display:none;position:absolute;top:calc(100% + 8px);right:0;width:250px;padding:6px;background:var(--surface);border:1px solid var(--line2);border-radius:14px;box-shadow:0 14px 36px rgba(0,0,0,.3)}
+.psel.open .pmenu{display:block;animation:fpop .14s ease-out}
+.po{width:100%;display:flex;align-items:center;gap:10px;padding:10px 11px;border:0;border-radius:10px;background:transparent;color:var(--ink);font-size:13px;font-weight:600;text-align:left;cursor:pointer}
+.po:hover{background:var(--surface2)}
+.po.sel{background:var(--brand-soft);color:var(--brand)}
+.po .pc{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line2);display:grid;place-items:center;flex:none}
+.po.sel .pc{background:var(--brand);border-color:var(--brand)}
+.po.sel .pc::after{content:"";width:6px;height:6px;border-radius:50%;background:#fff}
+.po em{margin-left:auto;font-style:normal;font-size:10.5px;font-weight:600;color:var(--muted)}
 .badge{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;color:#b6f0d6;background:rgba(62,207,154,.12);border:1px solid rgba(62,207,154,.3);padding:6px 12px;border-radius:99px}
 .badge i{width:7px;height:7px;border-radius:50%;background:#3ecf9a;box-shadow:0 0 0 3px rgba(62,207,154,.25)}
 
@@ -121,7 +138,7 @@ details.map[open] summary::after{content:"–"}
 .search:focus{border-color:var(--brand);background:var(--surface);box-shadow:0 0 0 3px var(--brand-soft)}
 .search:disabled{opacity:.5}
 .twrap{overflow:auto;max-height:560px}
-table{border-collapse:separate;border-spacing:0;width:100%;min-width:980px;font-size:12.5px}
+table{border-collapse:separate;border-spacing:0;width:100%;min-width:1560px;font-size:12.5px}
 th{position:sticky;top:0;z-index:1;background:var(--surface2);color:var(--ink2);text-align:left;padding:11px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--line2);white-space:nowrap}
 td{padding:11px 14px;border-bottom:1px solid var(--line);white-space:nowrap;font-variant-numeric:tabular-nums}
 tbody tr:hover td{background:var(--surface2)}
@@ -175,6 +192,37 @@ td.mono{font-family:var(--mono);font-size:12px}
 .cnt{font-size:12px;color:var(--muted);font-weight:500}
 .clearbtn{padding:9px 14px;font-size:12.5px}
 
+.dim{color:var(--muted)}
+.rs{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px}
+.rs.new{background:var(--ok-soft);color:var(--ok)}
+.rs.old{background:var(--surface2);color:var(--ink2);border:1px solid var(--line2)}
+.yr{display:inline-block;font-size:11.5px;font-weight:650;color:var(--brand);background:var(--brand-soft);padding:3px 10px;border-radius:7px}
+.lk{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.lk b{display:block;font-size:12.5px;color:var(--ink2)}
+.lk span.h{display:block;font-size:11.5px;color:var(--muted);margin:2px 0 4px;line-height:1.5}
+.lkinfo{margin-top:8px;font-size:11.5px;color:var(--muted);line-height:1.5}
+.lkinfo.okk{color:var(--ok)}.lkinfo.bad{color:var(--bad)}.lkinfo.warn{color:var(--warn)}
+.lkinfo b{font-weight:700}
+.lkinfo details{margin-top:6px}.lkinfo summary{cursor:pointer;font-weight:650}
+.lkinfo .iss{max-height:150px;overflow:auto;margin-top:5px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:var(--surface2);color:var(--ink2);font-size:11px;line-height:1.55}
+.lkrow{display:flex;gap:8px;align-items:stretch;margin-top:8px;position:relative}
+.tplmenu{display:none;position:absolute;right:0;top:calc(100% + 6px);z-index:40;width:290px;max-width:100%;padding:6px;background:var(--surface);border:1px solid var(--line2);border-radius:13px;box-shadow:0 14px 34px rgba(15,28,46,.22)}
+.tplmenu.show{display:block;animation:fpop .14s ease-out}
+.to{width:100%;display:block;text-align:left;padding:10px 11px;border:0;border-radius:9px;background:transparent;color:var(--ink);cursor:pointer}
+.to:hover{background:var(--brand-soft)}
+.to b{display:block;font-size:13px;font-weight:650;margin-bottom:2px}
+.to span{display:block;font-size:11.5px;color:var(--muted);line-height:1.4}
+.lkdl{margin-top:6px;border:1px solid var(--line2);background:var(--surface);color:var(--brand);border-radius:8px;padding:5px 10px;font-size:11.5px;font-weight:650;cursor:pointer}
+.lkdl:hover{background:var(--brand-soft)}
+.lkrow label.btn{flex:1;margin-top:0!important;text-align:center;line-height:1.3}
+.lkrow .ic{width:46px;padding:0;flex:none;color:var(--brand)}
+.lkrow .ic svg{width:19px;height:19px}
+.lk label.btn{cursor:pointer;margin-top:8px}
+.apiprog{display:none;margin-top:10px}
+.apibar{height:6px;border-radius:99px;background:var(--surface2);border:1px solid var(--line);overflow:hidden}
+.apibar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brand),#5b8cff);transition:width .25s}
+.apitxt{margin-top:6px;font-size:11.5px;color:var(--muted);line-height:1.5}
+.apitxt .okk{color:var(--ok);font-weight:650}.apitxt .bad{color:var(--bad)}
 /* excel preview modal */
 .mo{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(8,16,32,.55);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
 .mo.show{display:flex;animation:mfade .18s ease-out}
@@ -191,7 +239,7 @@ td.mono{font-family:var(--mono);font-size:12px}
 .mx svg{width:16px;height:16px}
 .pv{display:flex;flex-direction:column;min-height:0;flex:1}
 .mbody{overflow:auto;flex:1;min-height:200px;background:var(--surface)}
-.xt{min-width:900px}
+.xt{min-width:1560px}
 .xt th{background:#0c1b33;color:#fff;border-bottom:3px solid var(--brand);text-align:center;padding:12px 14px;font-size:11px}
 .xt tbody tr:nth-child(even) td{background:var(--surface2)}
 .xt tbody tr:hover td{background:var(--brand-soft)}
@@ -228,6 +276,8 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:22px 16px 3
 @media(max-width:700px){
   .top-in,.hero-in,main{padding-left:14px;padding-right:14px}
   .badge{display:none}
+  .pbtn .pk{display:none}
+  .brand span{display:none}
   .hero h1{font-size:23px}
   .steps{grid-template-columns:1fr;gap:8px}
   .step{padding:10px 12px}
@@ -242,8 +292,14 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:22px 16px 3
 <body>
 
 <div class="top"><div class="top-in">
-  <div class="brand"><div class="logo">VL</div><div><b>NIC Excel Formatter</b><span>VLTD Activation Data · Odd / Even Record Arranger</span></div></div>
-  <div class="badge"><i></i>Processed locally in your browser</div>
+  <div class="brand"><div class="logo">VL</div><div><b id="brandName">NIC Excel Formatter</b><span>VLTD Activation Data · Odd / Even Record Arranger</span></div></div>
+  <div class="psel" id="psel">
+    <button class="pbtn" id="pbtn" type="button" aria-haspopup="listbox" aria-expanded="false">
+      <span class="pk">Project</span><b id="pname">NIC</b>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="pmenu" id="pmenu" role="listbox" aria-label="Select project"></div>
+  </div>
 </div></div>
 
 <div class="hero"><div class="hero-in">
@@ -265,6 +321,21 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:22px 16px 3
         <input type="file" id="file" accept=".xlsx,.xls">
       </div>
       <div class="fileinfo" id="fileinfo"></div>
+      <div class="lk">
+        <span class="h">Feed an Excel / CSV with IMEI or Vehicle No plus Vehicle Registration Date (SIM dates, Client, Vehicle Age optional). Matching rows and Registration Status update at once.</span>
+        <div class="lkrow">
+          <label class="btn ghost" for="lkfile">Upload Vehicle Registration Date Excel</label>
+          <button class="btn ghost ic" id="tplDl" type="button" title="Download template" aria-label="Download template" aria-haspopup="menu" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5"/><path d="M4 18v1a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-1"/></svg>
+          </button>
+          <div class="tplmenu" id="tplMenu" role="menu">
+            <button type="button" class="to" role="menuitem" data-k="verified"><b>Verified template</b><span>IMEI + Vehicle Number + Registration Date. Fed only when IMEI and vehicle match the NIC data.</span></button>
+            <button type="button" class="to" role="menuitem" data-k="basic"><b>Basic template</b><span>IMEI + Registration Date.</span></button>
+          </div>
+        </div>
+        <input type="file" id="lkfile" accept=".xlsx,.xls,.csv" hidden>
+        <div class="lkinfo" id="lkinfo"></div>
+      </div>
       <button class="btn primary full" id="process" disabled>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span id="processLabel">Process Excel File</span>
       </button>
@@ -272,6 +343,13 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:22px 16px 3
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5"/><path d="M4 18v1a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-1"/></svg>Download Final Excel
       </button>
       <div class="message" id="message"></div>
+      <div class="lk">
+        <b style="display:none">Portal data · SIM dates, Client, Vehicle Age</b>
+        <span class="h" style="display:none">Searched live on the portal (api/search) by IMEI. It runs automatically after processing and each result appears in the table as soon as it arrives.</span>
+        <button class="btn ghost full" id="apiGo" type="button">Fetch from Portal API</button>
+        <button class="btn ghost full" id="apiStop" type="button" style="display:none">Stop</button>
+        <div class="apiprog" id="apiProg"><div class="apibar"><i id="apiFill"></i></div><div class="apitxt" id="apiTxt"></div></div>
+      </div>
 
       <details class="map">
         <summary>Source column mapping</summary>
@@ -326,7 +404,7 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:22px 16px 3
         </div>
         <div class="twrap">
           <table>
-            <thead><tr><th>S.No.</th><th>IMEI No.</th><th>Device Serial No.</th><th>Activation Status</th><th>Activation Date</th><th>Vehicle Reg No (VLTD)</th><th>Vehicle Reg No (Vahan)</th></tr></thead>
+            <thead><tr><th>S.No.</th><th>IMEI No.</th><th>Device Serial No.</th><th>Activation Status</th><th>Activation Date</th><th>Vehicle Reg No (VLTD)</th><th>Vehicle Reg No (Vahan)</th><th>SIM Activation Date</th><th>SIM Expiry Date</th><th>Activation Years</th><th>Vehicle Age</th><th>Vehicle Registration Date</th><th>Registration Status</th><th>Client Name</th></tr></thead>
             <tbody id="tbody"></tbody>
           </table>
         </div>
@@ -366,14 +444,65 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:22px 16px 3
     </div>
   </div>
 </div>
-<footer>NIC Excel Formatter · Final output: 7-column VLTD activation register</footer>
+<footer>NIC Excel Formatter · Final output: 14-column VLTD activation register</footer>
 
 <script>
 const $ = id => document.getElementById(id);
 let sourceFile=null, finalRows=[], workbookName="Final_Data";
-const headers=["S.No.","IMEI No.","Device Serial No.","Activation Status","Activation Date","Vehicle Reg No(VLTD)","Vehicle Reg No(Vahan)"];
+const headers=["S.No.","IMEI No.","Device Serial No.","Activation Status","Activation Date","Vehicle Reg No(VLTD)","Vehicle Reg No(Vahan)","SIM Activation Date","SIM Expiry Date","Activation Years","Vehicle Age","Vehicle Registration Date","Registration Status","Client Name"];
+const NCOL=14;
+/* row layout: 0-6 NIC columns | 7 SIM Activation | 8 SIM Expiry | 9 Activation Years | 10 Vehicle Age | 11 Vehicle Registration Date | 12 Registration Status | 13 Client Name | 14 NIC activation (ms, hidden) */
+const API_URL="https://production.nyggs.com/backend/api/get/All";
+const API_SEARCH_URL="https://production.nyggs.com/backend/api/search";
+const API_USER_ID=9;
+/* ---- date helpers (all in UTC day numbers, no timezone drift) ---- */
+const MON={jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+function toMs(v){
+ if(v===null||v===undefined||v==="")return "";
+ if(v instanceof Date){if(isNaN(v))return "";const d=new Date(v.getTime()+60000);return Date.UTC(d.getFullYear(),d.getMonth(),d.getDate());}
+ if(typeof v==="number"){return (v>20000&&v<90000)?Date.UTC(1899,11,30)+Math.floor(v)*864e5:"";}
+ const t=String(v).trim();if(!t)return "";
+ let m;
+ if(/^\d{5}(\.\d+)?$/.test(t))return toMs(parseFloat(t));
+ if((m=t.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})/)))return Date.UTC(+m[1],+m[2]-1,+m[3]);
+ if((m=t.match(/^(\d{1,2})[-\/. ]([A-Za-z]{3})[a-z]*[-\/. ,]*(\d{2,4})/))){const mo=MON[m[2].toLowerCase()];if(mo!==undefined){let y=+m[3];if(y<100)y+=2000;return Date.UTC(y,mo,+m[1]);}}
+ if((m=t.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{2,4})/))){let y=+m[3];if(y<100)y+=2000;return Date.UTC(y,+m[2]-1,+m[1]);}
+ return "";
+}
+const p2=n=>String(n).padStart(2,"0");
+function fmtD(ms){if(ms==="")return "";const d=new Date(ms);return p2(d.getUTCDate())+"-"+p2(d.getUTCMonth()+1)+"-"+d.getUTCFullYear();}
+function ymText(months){
+ if(months<=0)return "";
+ const y=Math.floor(months/12),m=months%12,out=[];
+ if(y)out.push(y+(y===1?" Year":" Years"));
+ if(m)out.push(m+(m===1?" Month":" Months"));
+ return out.join(" ");
+}
+/* Activation Years = Activation Date -> Expiry Date (expiry is usually activation + N, minus 1 day) */
+function activationYears(a,e){
+ if(a===""||e==="")return "";
+ return ymText(Math.round((e-a+864e5)/864e5/30.4375));
+}
+/* Vehicle Age = registration date -> today */
+function vehicleAge(r){
+ if(r==="")return "";
+ const n=new Date(),t=Date.UTC(n.getFullYear(),n.getMonth(),n.getDate());
+ if(t<r)return "0 Months";
+ const a=new Date(r),b=new Date(t);
+ let mo=(b.getUTCFullYear()-a.getUTCFullYear())*12+b.getUTCMonth()-a.getUTCMonth();
+ if(b.getUTCDate()<a.getUTCDate())mo--;
+ return ymText(Math.max(mo,0))||"0 Months";
+}
+/* Registration Status: registered up to 31-Dec-2025 = OLD, from 01-Jan-2026 = NEW */
+const NEW_FROM=Date.UTC(2026,0,1);
+const regStatus=r=>r===""?"":(r>=NEW_FROM?"NEW":"OLD");
+let lookup=new Map();
+let vmap=new Map();
+let pairMap=new Map();   // "IMEI|VEHICLE" -> registration date (ms) that was verified against the NIC row
+let lastIssues=[];   // normalised vehicle number -> registration date (ms), from a fed Excel
+const vnorm=v=>clean(v).toUpperCase().replace(/[^A-Z0-9]/g,"");
 const clean=v => v===null||v===undefined ? "" : String(v).trim();
-const EMPTY='<tr><td colspan="7" class="empty"><div class="eic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div><b>No records yet</b>Upload a NIC Excel file to see the arranged records.</td></tr>';
+const EMPTY='<tr><td colspan="14" class="empty"><div class="eic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div><b>No records yet</b>Upload a NIC Excel file to see the arranged records.</td></tr>';
 
 function setStep(n){
   [1,2,3].forEach(i=>{const s=$("st"+i);s.classList.toggle("done",i<n);s.classList.toggle("active",i===n);
@@ -397,7 +526,7 @@ function setFile(file){
   sourceFile=file;fileMeta={name:file.name,size:file.size};
   const fi=$("fileinfo");fi.classList.add("show");
   fi.innerHTML='<div class="fi">XLS</div><div><b>'+escapeHtml(file.name)+'</b><span>'+(file.size/1024).toFixed(1)+' KB</span></div>';
-  $("process").disabled=false;$("download").disabled=true;$("search").disabled=true;$("clear").disabled=false;
+  $("process").disabled=!projReady();$("download").disabled=true;$("search").disabled=true;$("clear").disabled=false;
   $("processLabel").textContent="Process Excel File";
   finalRows=[];page=1;resetStats();render();setStep(2);
   showMessage("File selected. Click Process Excel File to arrange the records.","ok");
@@ -410,25 +539,27 @@ $("drop").addEventListener("drop",e=>setFile(e.dataTransfer.files[0]));
 function parseDate(v){return clean(v);}
 
 $("process").addEventListener("click",async()=>{
- if(!sourceFile)return;
+ if(!sourceFile||!projReady())return;
  if(typeof XLSX==="undefined"){showMessage("Excel reader library could not load. Please check your internet connection and refresh the page.","error");return;}
  try{
   const buf=await sourceFile.arrayBuffer();
-  const wb=XLSX.read(buf,{type:"array",cellDates:false});
+  const wb=XLSX.read(buf,{type:"array",cellDates:true});
   const sheet=wb.Sheets[wb.SheetNames[0]];
   const data=XLSX.utils.sheet_to_json(sheet,{header:1,raw:false,defval:""});
+  const rawData=XLSX.utils.sheet_to_json(sheet,{header:1,raw:true,defval:"",cellDates:true});
+  const dateOf=(rr,txt)=>{const x=toMs(rr);return x!==""?x:toMs(txt);};
   if(!data.length)throw new Error("The selected worksheet is empty.");
   // NIC source layout: A=odd S.No.; B=sorting_1 IMEI; C:G=odd details.
   // H=even S.No.; B=sorting_1 IMEI on the same row; I:M=even details.
   const oddRows=[],evenRows=[];
   for(let r=1;r<data.length;r++){
-    const row=data[r]||[];
+    const row=data[r]||[], rrow=rawData[r]||[];
     const oddNo=clean(row[0]), evenNo=clean(row[7]), imei=clean(row[1]);
     if(oddNo!==""){
-      oddRows.push([oddNo,imei,clean(row[2]),clean(row[3]),parseDate(row[4]),clean(row[5]),clean(row[6])]);
+      oddRows.push([oddNo,imei,clean(row[2]),clean(row[3]),parseDate(row[4]),clean(row[5]),clean(row[6]),"","","","","","","",dateOf(rrow[4],row[4])]);
     }
     if(evenNo!==""){
-      evenRows.push([evenNo,imei,clean(row[8]),clean(row[9]),parseDate(row[10]),clean(row[11]),clean(row[12])]);
+      evenRows.push([evenNo,imei,clean(row[8]),clean(row[9]),parseDate(row[10]),clean(row[11]),clean(row[12]),"","","","","","","",dateOf(rrow[10],row[10])]);
     }
   }
   const all=oddRows.concat(evenRows).filter(r=>r[0]!==""||r[2]!=="");
@@ -436,6 +567,7 @@ $("process").addEventListener("click",async()=>{
   // Remove duplicate S.No. + device serial combinations only; preserve distinct device rows.
   const seen=new Set();
   finalRows=all.filter(r=>{const k=clean(r[0])+"|"+clean(r[2]);if(seen.has(k))return false;seen.add(k);return true;});
+  enrich();
   if(!finalRows.length)throw new Error("No Odd or Even records found. Please check that the source columns match the mapping.");
   const oddSet=new Set(oddRows.map(r=>Number(r[0])).filter(n=>Number.isInteger(n)&&n>0));
   const evenSet=new Set(evenRows.map(r=>Number(r[0])).filter(n=>Number.isInteger(n)&&n>0));
@@ -449,6 +581,7 @@ $("process").addEventListener("click",async()=>{
   $("download").disabled=false;$("search").disabled=false;$("processLabel").textContent="Process Again";
   workbookName=sourceFile.name.replace(/\.(xlsx|xls)$/i,"");
   page=1;render();setStep(3);saveState();
+  setTimeout(()=>{if(!apiAbort)fetchFromApi();},50);
   showMessage("Successfully arranged "+f(finalRows.length)+" records. IMEI values were read from sorting_1 for both Odd and Even rows. Mapping Missing counts records where Vehicle Reg No (VLTD) is blank.","ok");
  }catch(err){showMessage(err.message||"Unable to process this workbook.","error");}
 });
@@ -482,20 +615,15 @@ function render(){
  const vf=$("vfilter").value;
  const vOk=r=>vf==="all"||(vf==="vltd"&&!clean(r[5]))||(vf==="vahan"&&!clean(r[6]))||(vf==="either"&&(!clean(r[5])||!clean(r[6])))||(vf==="mapped"&&clean(r[5])&&clean(r[6]));
  syncFilterUI(vf);
- const rows=finalRows.filter(r=>vOk(r)&&(!q||r.some(v=>clean(v).toLowerCase().includes(q))));
+ const rows=finalRows.filter(r=>vOk(r)&&(!q||r.slice(0,NCOL).some(v=>clean(v).toLowerCase().includes(q))));
  if(!finalRows.length){$("tbody").innerHTML=EMPTY;$("showing").textContent="No records loaded";renderPager(1);return;}
  const pages=Math.max(1,Math.ceil(rows.length/perPage));
  if(page>pages)page=pages;
  const start=(page-1)*perPage;
- $("tbody").innerHTML=rows.length?rows.slice(start,start+perPage).map(r=>"<tr>"+r.map((v,i)=>{
-   const vehicleCol=(i===5||i===6), blank=!clean(v);
-   let inner;
-   if(i===3) inner=clean(v).toUpperCase()==="ACTIVATED"?"<span class='status'>"+escapeHtml(v)+"</span>":(blank?"":"<span class='status other'>"+escapeHtml(v)+"</span>");
-   else if(vehicleCol&&blank) inner="<span class='nm'>Not Mapped</span>";
-   else inner=escapeHtml(v);
+ $("tbody").innerHTML=rows.length?rows.slice(start,start+perPage).map(r=>"<tr>"+r.slice(0,NCOL).map((v,i)=>{
    const cls=i===0?"sno":(i===1||i===2?"mono":"");
-   return "<td"+(cls?" class='"+cls+"'":"")+">"+inner+"</td>";
- }).join("")+"</tr>").join(""):"<tr><td colspan='7' class='empty'><b>No matching records</b>Try a different search term.</td></tr>";
+   return "<td"+(cls?" class='"+cls+"'":"")+">"+previewCell(v,i)+"</td>";
+ }).join("")+"</tr>").join(""):"<tr><td colspan='14' class='empty'><b>No matching records</b>Try a different search term.</td></tr>";
  $("showing").textContent=rows.length?("Showing "+(start+1).toLocaleString("en-IN")+"–"+Math.min(start+perPage,rows.length).toLocaleString("en-IN")+" of "+rows.length.toLocaleString("en-IN")):"0 results";
  renderPager(pages);
 }
@@ -527,20 +655,20 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"){setFMenu(false);if(
 const MIME="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 const PREVIEW_N=100;
 const outName=()=>workbookName+"_FINAL_FORMAT.xlsx";
-const mapRow=r=>r.map((v,i)=>((i===5||i===6)&&!clean(v))?"Not Mapped":v);
+const mapRow=r=>r.slice(0,NCOL).map((v,i)=>((i===5||i===6)&&!clean(v))?"Not Mapped":v);
 
 async function buildExcel(){
  const rows=finalRows.map(mapRow);
  // Fallback: plain workbook if the styling library could not load
  if(typeof ExcelJS==="undefined"){
   const ws=XLSX.utils.aoa_to_sheet([headers,...rows]);
-  ws["!cols"]=[{wch:10},{wch:21},{wch:27},{wch:22},{wch:22},{wch:25},{wch:27}];
+  ws["!cols"]=[{wch:10},{wch:21},{wch:27},{wch:22},{wch:22},{wch:25},{wch:27},{wch:20},{wch:18},{wch:20},{wch:16},{wch:24},{wch:20},{wch:34}];
   const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Final Data");
   return new Blob([XLSX.write(wb,{bookType:"xlsx",type:"array"})],{type:MIME});
  }
  const wb=new ExcelJS.Workbook();wb.creator="NIC Excel Formatter";wb.created=new Date();
  const ws=wb.addWorksheet("Final Data",{views:[{state:"frozen",ySplit:1,showGridLines:false}],properties:{tabColor:{argb:"FF1F4FD8"}}});
- const widths=[9,22,27,20,20,24,24];
+ const widths=[9,22,27,20,20,24,24,20,18,20,16,24,20,34];
  ws.columns=headers.map((h,i)=>({header:h,key:"c"+i,width:widths[i]}));
  const hr=ws.getRow(1);hr.height=30;
  hr.eachCell(c=>{
@@ -552,11 +680,11 @@ async function buildExcel(){
  const line={bottom:{style:"thin",color:{argb:"FFE3E8F0"}}};
  rows.forEach((r,idx)=>{
   const n=Number(r[0]);
-  const row=ws.addRow([(Number.isInteger(n)&&String(n)===clean(r[0]))?n:r[0],...r.slice(1)]);
+  const row=ws.addRow([(Number.isInteger(n)&&String(n)===clean(r[0]))?n:r[0],...r.slice(1,NCOL)]);
   row.height=22;
   row.eachCell({includeEmpty:true},(c,ci)=>{
    c.font={name:"Calibri",size:11,color:{argb:"FF1D2939"}};
-   c.alignment={vertical:"middle",horizontal:(ci===1||ci===4||ci===5)?"center":"left"};
+   c.alignment={vertical:"middle",horizontal:(ci===1||ci===4||ci===5||(ci>=8&&ci<=13))?"center":"left"};
    c.border=line;
    if(idx%2===1)c.fill={type:"pattern",pattern:"solid",fgColor:{argb:"FFF7F9FC"}};
    if(ci===2||ci===3)c.numFmt="@";
@@ -565,6 +693,12 @@ async function buildExcel(){
    const c=row.getCell(4);
    c.font={name:"Calibri",size:11,bold:true,color:{argb:"FF0F8A5F"}};
    c.fill={type:"pattern",pattern:"solid",fgColor:{argb:"FFE5F6EE"}};
+  }
+  {
+   const c=row.getCell(13),v=c.value;
+   if(v==="NEW"){c.font={name:"Calibri",size:11,bold:true,color:{argb:"FF0F8A5F"}};c.fill={type:"pattern",pattern:"solid",fgColor:{argb:"FFE5F6EE"}};}
+   else if(v==="OLD"){c.font={name:"Calibri",size:11,bold:true,color:{argb:"FF41506A"}};c.fill={type:"pattern",pattern:"solid",fgColor:{argb:"FFEEF1F6"}};}
+   const y=row.getCell(10);if(y.value)y.font={name:"Calibri",size:11,bold:true,color:{argb:"FF1F4FD8"}};
   }
   [6,7].forEach(ci=>{
    const c=row.getCell(ci);
@@ -575,7 +709,7 @@ async function buildExcel(){
    }
   });
  });
- ws.autoFilter={from:{row:1,column:1},to:{row:rows.length+1,column:7}};
+ ws.autoFilter={from:{row:1,column:1},to:{row:rows.length+1,column:NCOL}};
  ws.pageSetup={orientation:"landscape",fitToPage:true,fitToWidth:1,fitToHeight:0};
  const buf=await wb.xlsx.writeBuffer();
  return new Blob([buf],{type:MIME});
@@ -589,6 +723,9 @@ function saveBlob(blob,name){
 let dlTimer=null,dlTick=null,dlPromise=null;
 function previewCell(v,i){
  const blank=!clean(v);
+ if(i>=7&&blank)return "<span class='dim'>—</span>";
+ if(i===9)return "<span class='yr'>"+escapeHtml(v)+"</span>";
+ if(i===12)return "<span class='rs "+(v==="NEW"?"new":"old")+"'>"+escapeHtml(v)+"</span>";
  if(i===3)return clean(v).toUpperCase()==="ACTIVATED"?"<span class='status'>"+escapeHtml(v)+"</span>":(blank?"":"<span class='status other'>"+escapeHtml(v)+"</span>");
  if((i===5||i===6)&&blank)return "<span class='nm'>Not Mapped</span>";
  return escapeHtml(v);
@@ -596,11 +733,11 @@ function previewCell(v,i){
 function openPreview(){
  if(!finalRows.length)return;
  $("mTitle").textContent=outName();
- $("mMeta").textContent=finalRows.length.toLocaleString("en-IN")+" rows · 7 columns · Sheet: Final Data";
+ $("mMeta").textContent=finalRows.length.toLocaleString("en-IN")+" rows · 14 columns · Sheet: Final Data";
  $("mHead").innerHTML="<tr>"+headers.map(h=>"<th>"+escapeHtml(h)+"</th>").join("")+"</tr>";
  const shown=finalRows.slice(0,PREVIEW_N);
- $("mBody").innerHTML=shown.map(r=>"<tr>"+r.map((v,i)=>{
-  const cls=i===0?"sno c":(i===1||i===2?"mono":(i===3||i===4?"c":""));
+ $("mBody").innerHTML=shown.map(r=>"<tr>"+r.slice(0,NCOL).map((v,i)=>{
+  const cls=i===0?"sno c":(i===1||i===2?"mono":(i===3||i===4||(i>=7&&i<=12)?"c":""));
   return "<td"+(cls?" class='"+cls+"'":"")+">"+previewCell(v,i)+"</td>";
  }).join("")+"</tr>").join("");
  $("mNote").textContent=finalRows.length>PREVIEW_N?("Preview shows the first "+PREVIEW_N+" of "+finalRows.length.toLocaleString("en-IN")+" rows. The downloaded file has all rows."):"Preview of the complete file.";
@@ -646,11 +783,410 @@ $("mCancel2").addEventListener("click",closePreview);
 $("mo").addEventListener("click",e=>{if(e.target===$("mo"))closePreview();});
 
 $("clear").addEventListener("click",()=>{
- sourceFile=null;fileMeta=null;finalRows=[];DB.del("state").catch(()=>{});$("file").value="";$("fileinfo").classList.remove("show");
+ if(apiAbort)apiAbort.abort();lookup=new Map();vmap=new Map();pairMap=new Map();$("apiTxt").textContent="";$("apiProg").style.display="none";
+ sourceFile=null;fileMeta=null;finalRows=[];DB.del(stateKey()).catch(()=>{});$("file").value="";$("fileinfo").classList.remove("show");
  $("process").disabled=true;$("download").disabled=true;$("search").disabled=true;$("search").value="";
  $("processLabel").textContent="Process Excel File";$("clear").disabled=true;
  page=1;$("vfilter").value="all";resetStats();render();setStep(1);$("message").className="message";$("message").textContent="";
 });
+
+/* ---- Expiry / Client lookup (optional second file, matched by IMEI) ---- */
+const imeiKey=r=>clean(r[1]).replace(/\.0+$/,"");
+function enrichRow(r){
+ const lk=lookup.get(imeiKey(r));
+ if(lk){
+  if(lk.act!==""&&lk.act!==undefined)r[7]=fmtD(lk.act);
+  if(lk.exp!==""&&lk.exp!==undefined)r[8]=fmtD(lk.exp);
+  if(lk.client)r[13]=lk.client;
+ }
+ // Vehicle Registration Date: a fed Excel (by IMEI or by vehicle number) updates the column
+ let rv="";
+ { // verified IMEI + vehicle pair (exact row)
+  const ik=imeiKey(r),pa=pairMap.get(ik+"|"+vnorm(r[5])),pb=pairMap.get(ik+"|"+vnorm(r[6]));
+  rv=pa!==undefined?pa:(pb!==undefined?pb:"");
+ }
+ if(rv===""&&lk&&lk.reg!==""&&lk.reg!==undefined)rv=lk.reg;
+ if(rv===""){const a=vmap.get(vnorm(r[5])),b=vmap.get(vnorm(r[6]));rv=a!==undefined?a:(b!==undefined?b:"");}
+ if(rv!=="")r[11]=fmtD(rv);
+ const act=toMs(r[7]),exp=toMs(r[8]),nic=(r[14]===undefined?"":r[14]),reg=toMs(r[11]);
+ // Activation Years = SIM Activation Date -> SIM Expiry Date (falls back to the NIC Activation Date)
+ r[9]=activationYears(act!==""?act:nic,exp);
+ // Vehicle Age = value from the portal (OLD / NEW); else computed from the registration date
+ r[10]=(lk&&lk.vage)?lk.vage:(reg!==""?vehicleAge(reg):(r[10]||""));
+ // Registration Status: Vehicle Registration Date up to 31-Dec-2025 = OLD, from 01-Jan-2026 = NEW
+ r[12]=regStatus(reg);
+ return (lk||rv!=="")?1:0;
+}
+function enrich(){let hit=0;finalRows.forEach(r=>{hit+=enrichRow(r);});return hit;}
+/* ---- strict readers for the fed Excel (accuracy first: anything doubtful is skipped and reported, never guessed) ---- */
+function strictDate(v){
+ if(v===null||v===undefined||v==="")return {ms:""};
+ if(v instanceof Date||typeof v==="number"){const ms=toMs(v);return ms===""?{err:"not a valid date"}:{ms};}
+ const t=String(v).trim();
+ let m,y,mo,d;
+ if((m=t.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})(?:[ T].*)?$/))){y=+m[1];mo=+m[2];d=+m[3];}
+ else if((m=t.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{4})$/))){d=+m[1];mo=+m[2];y=+m[3];}
+ else if((m=t.match(/^(\d{1,2})[-\/. ]([A-Za-z]{3})[a-z]*[-\/. ,]*(\d{4})$/))){const q=MON[m[2].toLowerCase()];if(q===undefined)return {err:"unreadable date \""+t.slice(0,18)+"\""};d=+m[1];mo=q+1;y=+m[3];}
+ else if(/^\d{5}(\.\d+)?$/.test(t)){const ms=toMs(parseFloat(t));return ms===""?{err:"not a valid date"}:{ms};}
+ else return {err:"unreadable date \""+t.slice(0,18)+"\" (use dd-mm-yyyy)"};
+ const ms=Date.UTC(y,mo-1,d),c=new Date(ms);
+ if(mo<1||mo>12||c.getUTCFullYear()!==y||c.getUTCMonth()!==mo-1||c.getUTCDate()!==d)return {err:"date does not exist \""+t.slice(0,18)+"\""};
+ return {ms};
+}
+function normImei(v){
+ if(v===null||v===undefined||v==="")return {err:"IMEI is blank"};
+ if(typeof v==="number"){
+  if(!Number.isInteger(v)||v<1e9)return {err:"IMEI is not a whole number"};
+  if(v>Number.MAX_SAFE_INTEGER)return {err:"IMEI too long for a number cell (format the column as Text)"};
+  return {k:String(v)};
+ }
+ let t=String(v).trim().replace(/^'/,"").replace(/\s+/g,"").replace(/\.0+$/,"");
+ if(/^\d+(\.\d+)?e[+-]?\d+$/i.test(t))return {err:"IMEI \""+t.slice(0,16)+"\" is in scientific notation (format the column as Text)"};
+ if(!/^\d{10,20}$/.test(t))return {err:"IMEI \""+t.slice(0,18)+"\" is not a valid number"};
+ return {k:t};
+}
+async function loadLookup(file){
+ const box=$("lkinfo");
+ try{
+  const buf=await file.arrayBuffer();
+  const wb=XLSX.read(buf,{type:"array",cellDates:true});
+  const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,raw:true,defval:"",cellDates:true});
+  const isVeh=h=>/(vehicle|veh|regn?|registration)[^a-z]*(no|number|num)\b/.test(h)&&!/date|age|status/.test(h);
+  let hi=rows.findIndex(r=>r.some(c=>/imei/i.test(String(c))));
+  if(hi<0)hi=rows.findIndex(r=>r.some(c=>isVeh(String(c).toLowerCase().trim())));
+  if(hi<0)throw new Error("No IMEI or Vehicle Number column found in the first rows.");
+  const H=rows[hi].map(c=>String(c).toLowerCase().trim());
+  const find=(...res)=>{for(const re of res){const i=H.findIndex(h=>re.test(h));if(i>=0)return i;}return -1;};
+  const ci=find(/^imei/,/imei/), ce=find(/expir/,/valid/), ca=find(/sim.*activation/,/^activation/), cc=find(/client/,/company/,/customer/),
+        cr=find(/(vehicle|veh).*regist.*date/,/regist.*date/,/reg.*date/,/doreg/),
+        cv=find(/vehicle\s*age/,/veh.*age/),
+        cn=H.findIndex(isVeh);
+  if(ci<0&&cn<0)throw new Error("No IMEI or Vehicle Number column found.");
+  if(ce<0&&cc<0&&cr<0&&cv<0&&ca<0)throw new Error("Need at least one of: Vehicle Registration Date, SIM Activation Date, Expiry Date, Client Name, Vehicle Age columns.");
+  const pure=ce<0&&cc<0&&cv<0&&ca<0;            // a plain registration-date template
+  // IMEI + Vehicle No + date  => every row is verified against the NIC data before it is fed
+  const verified=ci>=0&&cn>=0&&cr>=0;
+  if(verified&&!finalRows.length)throw new Error("Verified template: pehle NIC file process karo, phir ye file upload karo (IMEI + Vehicle No verify karne ke liye NIC data chahiye).");
+  const nicByImei=new Map(),nicByVeh=new Map();
+  if(verified)finalRows.forEach(r=>{const k=imeiKey(r);if(!nicByImei.has(k))nicByImei.set(k,[]);nicByImei.get(k).push(r);[vnorm(r[5]),vnorm(r[6])].forEach(v=>{if(!v)return;if(!nicByVeh.has(v))nicByVeh.set(v,[]);nicByVeh.get(v).push(r);});});
+  const pairs=new Map(),pairConf=new Set();
+  const today=Date.now(),issues=[];
+  const bad=(row,msg)=>issues.push("Row "+row+": "+msg);
+  const regByImei=new Map(),regByVeh=new Map(),conflictI=new Set(),conflictV=new Set(),extra=new Map();
+  let total=0;
+  for(let i=hi+1;i<rows.length;i++){
+   const r=rows[i],rn=i+1;
+   if(r.every(c=>c===""||c===null||c===undefined))continue;
+   total++;
+   // --- registration date (strict)
+   let reg="";
+   if(cr>=0){
+    const raw=r[cr];
+    if(raw===""||raw===null||raw===undefined){if(pure){bad(rn,"registration date is blank");continue;}}
+    else{
+     const d=strictDate(raw);
+     if(d.err){bad(rn,d.err);continue;}
+     const yr=new Date(d.ms).getUTCFullYear();
+     if(d.ms>today){bad(rn,"registration date "+fmtD(d.ms)+" is in the future");continue;}
+     if(yr<1980){bad(rn,"registration date "+fmtD(d.ms)+" looks wrong (before 1980)");continue;}
+     reg=d.ms;
+    }
+   }
+   // --- IMEI (strict)
+   if(ci>=0){
+    const im=normImei(r[ci]);
+    if(im.err){bad(rn,im.err);continue;}
+    if(reg!==""&&!verified){
+     if(regByImei.has(im.k)&&regByImei.get(im.k)!==reg){conflictI.add(im.k);bad(rn,"IMEI "+im.k+" has different dates in this file — not applied");}
+     else regByImei.set(im.k,reg);
+    }
+    if(!pure){
+     const prev=extra.get(im.k)||{};
+     const nx={act:ca>=0?toMs(r[ca]):"",exp:ce>=0?toMs(r[ce]):"",client:cc>=0?clean(r[cc]):"",vage:cv>=0?clean(r[cv]).toUpperCase():""};
+     for(const f in nx)if(nx[f]!==""&&nx[f]!==undefined)prev[f]=nx[f];
+     extra.set(im.k,prev);
+    }
+    if(verified&&reg!==""){
+     const vn=vnorm(r[cn]);
+     if(!vn)bad(rn,"vehicle number is blank");
+     else if(!/^[A-Z0-9]{4,15}$/.test(vn))bad(rn,"vehicle number \""+clean(r[cn]).slice(0,16)+"\" is not valid");
+     else{
+      const rowsI=nicByImei.get(im.k)||[];
+      if(!rowsI.length){
+       const other=nicByVeh.get(vn);
+       bad(rn,other?"IMEI "+im.k+" is not in the NIC data (vehicle "+vn+" belongs to IMEI "+[...new Set(other.map(imeiKey))].join(", ")+")":"IMEI "+im.k+" and vehicle "+vn+" are not in the NIC data");
+      }else if(!rowsI.some(x=>vnorm(x[5])===vn||vnorm(x[6])===vn)){
+       bad(rn,"IMEI "+im.k+" is in the NIC data but vehicle "+vn+" does NOT match (NIC has: "+[...new Set(rowsI.flatMap(x=>[vnorm(x[5]),vnorm(x[6])]).filter(Boolean))].join(" / ")+")");
+      }else{
+       const pk=im.k+"|"+vn;
+       if(pairs.has(pk)&&pairs.get(pk)!==reg){pairConf.add(pk);bad(rn,"IMEI "+im.k+" + vehicle "+vn+" has different dates in this file — not applied");}
+       else pairs.set(pk,reg);
+      }
+     }
+    }
+   }
+   // --- vehicle number
+   if(cn>=0&&reg!==""&&!verified){
+    const k=vnorm(r[cn]);
+    if(k){
+     if(regByVeh.has(k)&&regByVeh.get(k)!==reg){conflictV.add(k);bad(rn,"vehicle "+k+" has different dates in this file — not applied");}
+     else regByVeh.set(k,reg);
+    }
+   }
+  }
+  conflictI.forEach(k=>regByImei.delete(k));conflictV.forEach(k=>regByVeh.delete(k));
+  // --- apply (merge: keeps whatever the portal already gave)
+  regByImei.forEach((reg,k)=>{const p=lookup.get(k)||{act:"",exp:"",reg:"",client:"",vage:""};p.reg=reg;lookup.set(k,p);});
+  extra.forEach((nx,k)=>{if(conflictI.has(k)&&!Object.keys(nx).length)return;const p=lookup.get(k)||{act:"",exp:"",reg:"",client:"",vage:""};for(const f in nx)p[f]=nx[f];lookup.set(k,p);});
+  regByVeh.forEach((reg,k)=>vmap.set(k,reg));
+  pairConf.forEach(k=>pairs.delete(k));pairs.forEach((reg,k)=>pairMap.set(k,reg));
+  // --- match report against the current NIC rows
+  let msg=file.name+" · "+total.toLocaleString("en-IN")+" rows read · "+(verified?pairs.size:(regByImei.size+regByVeh.size)).toLocaleString("en-IN")+(verified?" verified (IMEI + vehicle matched)":" valid registration dates");
+  if(finalRows.length){
+   const nicI=new Set(finalRows.map(imeiKey));
+   const nicV=new Set();finalRows.forEach(r=>{nicV.add(vnorm(r[5]));nicV.add(vnorm(r[6]));});
+   const noI=[...regByImei.keys()].filter(k=>!nicI.has(k)),noV=[...regByVeh.keys()].filter(k=>!nicV.has(k));
+   noI.slice(0,15).forEach(k=>issues.push("IMEI "+k+" is not in the NIC data (ignored)"));
+   if(noI.length>15)issues.push("… and "+(noI.length-15)+" more IMEIs not in the NIC data");
+   noV.slice(0,15).forEach(k=>issues.push("Vehicle "+k+" is not in the NIC data (ignored)"));
+   enrich();render();saveState();
+   const upd=finalRows.filter(r=>pairs.has(imeiKey(r)+"|"+vnorm(r[5]))||pairs.has(imeiKey(r)+"|"+vnorm(r[6]))||regByImei.has(imeiKey(r))||regByVeh.has(vnorm(r[5]))||regByVeh.has(vnorm(r[6]))).length;
+   msg+=" · <b>"+upd.toLocaleString("en-IN")+" of "+finalRows.length.toLocaleString("en-IN")+" NIC rows updated</b>";
+  }else msg+=" · will apply when you process the NIC file";
+  lastIssues=issues.slice();
+  box.className="lkinfo "+(issues.length?((verified&&!pairs.size)?"bad":"warn"):"okk");
+  box.innerHTML=escapeHtml(msg).replace(/&lt;b&gt;/g,"<b>").replace(/&lt;\/b&gt;/g,"</b>")+
+   (issues.length?"<details"+(verified?" open":"")+"><summary>"+issues.length.toLocaleString("en-IN")+(verified?" error(s) — these rows were NOT fed":" row(s) skipped / ignored")+" — click to see why</summary><div class='iss'>"+issues.slice(0,200).map(escapeHtml).join("<br>")+(issues.length>200?"<br>… and "+(issues.length-200)+" more":"")+"</div><button type='button' class='lkdl' data-act='iss'>Download all as CSV</button></details>":"");
+ }catch(err){box.className="lkinfo bad";box.textContent=err.message||"Could not read the file.";}
+}
+/* ---- template: IMEI + Vehicle Registration Date ---- */
+async function buildTemplate(kind){
+ const ver=kind==="verified";
+ if(typeof ExcelJS==="undefined"){
+  const ws=XLSX.utils.aoa_to_sheet([ver?["IMEI","Vehicle Number","Vehicle Registration Date"]:["IMEI","Vehicle Registration Date"]]);ws["!cols"]=ver?[{wch:24},{wch:20},{wch:28}]:[{wch:24},{wch:28}];
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Template");
+  return new Blob([XLSX.write(wb,{bookType:"xlsx",type:"array"})],{type:MIME});
+ }
+ const wb=new ExcelJS.Workbook();wb.creator="NIC Excel Formatter";
+ const ws=wb.addWorksheet("Template",{views:[{state:"frozen",ySplit:1,showGridLines:true}],properties:{tabColor:{argb:"FF1F4FD8"}}});
+ ws.columns=ver?[{header:"IMEI",key:"i",width:26,style:{numFmt:"@"}},{header:"Vehicle Number",key:"v",width:22,style:{numFmt:"@"}},{header:"Vehicle Registration Date",key:"d",width:30,style:{numFmt:"dd-mm-yyyy"}}]
+  :[{header:"IMEI",key:"i",width:26,style:{numFmt:"@"}},{header:"Vehicle Registration Date",key:"d",width:30,style:{numFmt:"dd-mm-yyyy"}}];
+ ws.getRow(1).height=28;
+ ws.getRow(1).eachCell(c=>{c.font={name:"Calibri",size:11,bold:true,color:{argb:"FFFFFFFF"}};c.fill={type:"pattern",pattern:"solid",fgColor:{argb:"FF0C1B33"}};c.alignment={vertical:"middle",horizontal:"center"};c.border={bottom:{style:"medium",color:{argb:"FF1F4FD8"}}};});
+ // pre-format the entry area: IMEI as Text (no 8.6E+14), dates as dd-mm-yyyy, dates checked on entry
+ for(let r=2;r<=5001;r++){
+  const a=ws.getCell(r,1),b=ws.getCell(r,ver?3:2);
+  a.numFmt="@";a.alignment={horizontal:"left"};
+  if(ver){const v=ws.getCell(r,2);v.numFmt="@";v.alignment={horizontal:"left"};}
+  b.numFmt="dd-mm-yyyy";b.alignment={horizontal:"center"};
+  b.dataValidation={type:"date",operator:"between",allowBlank:true,formulae:[new Date(Date.UTC(1980,0,1)),new Date(Date.UTC(2100,11,31))],showErrorMessage:true,errorStyle:"stop",errorTitle:"Invalid date",error:"Enter a real date as dd-mm-yyyy (for example 21-03-2025)."};
+ }
+ const g=wb.addWorksheet("How to fill");
+ g.columns=[{width:110}];
+ ["How to fill this template","",
+  ver?"1. Column A  IMEI : the 15-digit IMEI exactly as in the NIC file. The column is already Text, so do not change its format.":"1. Column A  IMEI : the 15-digit IMEI exactly as in the NIC file. The column is already Text, so do not change its format.",
+  ver?"2. Column C  Vehicle Registration Date : a real date, dd-mm-yyyy  (example 21-03-2025).":"2. Column B  Vehicle Registration Date : a real date, dd-mm-yyyy  (example 21-03-2025).",
+  "3. One row per IMEI. Do not repeat an IMEI with a different date.",
+  "4. Keep the header row and the sheet named Template as the first sheet. Leave unused rows empty.",
+  "5. Upload it with 'Upload Vehicle Registration Date Excel'. Each IMEI's registration date is filled into the matching NIC rows and Registration Status follows:",
+  "      registered up to 31-12-2025  =  OLD        registered from 01-01-2026  =  NEW",
+  ...(ver?["      VERIFIED TEMPLATE: column B  Vehicle Number : the vehicle number of that IMEI as in the NIC file (spaces / dashes do not matter).",
+   "      A row is fed ONLY when that IMEI and that vehicle number belong together in the NIC data. If they do not match, the row is NOT fed and the error is shown.",
+   "      The date goes to that exact NIC row, so Odd and Even rows sharing one IMEI each get their own date.",
+   "      Process the NIC file first, then upload this template."]:[]),
+  "6. Anything doubtful (blank or impossible date, future date, IMEI in scientific notation, IMEI repeated with two dates) is skipped and listed - nothing is guessed."
+ ].forEach((t,i)=>{const c=g.getCell(i+1,1);c.value=t;c.alignment={wrapText:true,vertical:"top"};c.font={name:"Calibri",size:i===0?14:11,bold:i===0};});
+ const buf=await wb.xlsx.writeBuffer();
+ return new Blob([buf],{type:MIME});
+}
+$("lkfile").addEventListener("change",e=>{const f=e.target.files[0];if(f)loadLookup(f);e.target.value="";});
+$("lkinfo").addEventListener("click",e=>{
+ if(!e.target.closest("[data-act='iss']"))return;
+ const csv="Issue\r\n"+lastIssues.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join("\r\n");
+ saveBlob(new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"}),"Registration_Date_Feed_Issues.csv");
+});
+/* template menu: basic (IMEI + date) / verified (IMEI + vehicle no + date) */
+const setTplMenu=o=>{$("tplMenu").classList.toggle("show",o);$("tplDl").setAttribute("aria-expanded",o?"true":"false");};
+$("tplDl").addEventListener("click",e=>{e.stopPropagation();setTplMenu(!$("tplMenu").classList.contains("show"));});
+$("tplMenu").addEventListener("click",async e=>{
+ const o=e.target.closest(".to");if(!o)return;setTplMenu(false);
+ try{const k=o.dataset.k;saveBlob(await buildTemplate(k),k==="verified"?"Vehicle_Registration_Date_Verified_Template.xlsx":"Vehicle_Registration_Date_Template.xlsx");}
+ catch(err){$("lkinfo").className="lkinfo bad";$("lkinfo").textContent="Could not create the template: "+(err.message||err);}
+});
+document.addEventListener("click",e=>{if(!$("tplMenu").contains(e.target)&&e.target!==$("tplDl"))setTplMenu(false);});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")setTplMenu(false);});
+
+/* ---- Portal API fetch: SIM Activation / Expiry, Client Name, Vehicle Age by IMEI ---- */
+let apiAbort=null;
+const apiDate=v=>{const m=toMs(v);return m;};
+function setApiUI(running){
+ $("apiGo").style.display=running?"none":"";
+ $("apiStop").style.display=running?"":"none";
+ $("apiProg").style.display=(running||$("apiTxt").textContent)?"block":"none";
+}
+/* Exact-IMEI search. Used by the Web Workers and by the page-thread fallback.
+   Only an item whose imeiNo equals the searched IMEI is ever accepted; a full page without an exact hit is re-read with a bigger page. */
+const SEARCH_SRC=`async function(urls,body,imei,signal){
+ let lastErr=null;
+ for(let u=0;u<urls.length;u++){
+  const last=u===urls.length-1;let answered=false;
+  for(const size of [10,50]){
+   let list=null;
+   try{
+    const r=await fetch(urls[u],{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},body,{search:imei,pageSize:size})),signal});
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    const j=await r.json();
+    list=Array.isArray(j)?j:(j&&Array.isArray(j.data)?j.data:(j&&j.data&&Array.isArray(j.data.content)?j.data.content:null));
+    if(!list)throw new Error('bad response');
+   }catch(x){if(signal&&signal.aborted)throw x;lastErr=x;answered=false;break;}
+   answered=true;
+   const h=list.find(x=>String(x.imeiNo).trim()===imei);
+   if(h)return {n:String(h.imeiNo).trim(),a:h.sim1ActivationDate,e:h.sim1ExpiryDate,c:h.clientName||h.clientNames||'',v:h.vehicleAge||''};
+   if(list.length<size)break;
+  }
+  // "not found" is accepted only when the last endpoint (get/All) answered properly and has no such IMEI
+  if(last){if(answered)return null;throw lastErr||new Error('no response');}
+ }
+ return null;
+}`;
+const API_URLS=[API_SEARCH_URL,API_URL];
+const searchImei=new Function("return "+SEARCH_SRC)();
+/* Web Worker source: each worker runs several searches in parallel and keeps JSON parsing off the page thread */
+const WORKER_SRC=`
+const searchImei=${SEARCH_SRC};
+self.stop=false;
+self.onmessage=async e=>{
+ const m=e.data;
+ if(m.t==='stop'){self.stop=true;return;}
+ let i=0;
+ const run=async()=>{
+  while(i<m.list.length&&!self.stop){
+   const imei=m.list[i++];let out=null,err=null;
+   for(let k=0;k<3&&!self.stop;k++){
+    try{out=await searchImei(m.urls,m.body,imei);err=null;break;}
+    catch(x){err=String((x&&x.message)||x);await new Promise(r=>setTimeout(r,250*(k+1)));}
+   }
+   postMessage({t:'r',imei,out,err});
+  }
+ };
+ await Promise.all(Array.from({length:m.conc},run));
+ postMessage({t:'d'});
+};`;
+const API_WORKERS=10, API_CONC=10, API_CHUNK=30;   // 10 x 10 = 100 searches in parallel
+const apiBody=()=>({userId:API_USER_ID,pageNo:0,pageSize:10,fromDate:6268266000,toDate:Date.now()+864e5,simStatus:"",stateId:null,statusMaster:null,showTabData:true,softwareVersion:"",isConfigActive:null,isConfigDone:null,isConfigSent:null,clientIds:null,subClientId:null,onlineDevice:false,simOperator:null,softwareVersionList:[],modelId:null,isPrimaryServerConnected:null,isSecondaryServerConnected:null,isThirdServerConnected:null,isFourthServerConnected:null});
+function applyApiItem(imei,o){
+ const prev=lookup.get(imei)||{};
+ lookup.set(imei,{act:toMs(o.a),exp:toMs(o.e),reg:prev.reg===undefined?"":prev.reg,client:clean(o.c),vage:clean(o.v).toUpperCase()});
+}
+async function fetchFromApi(){
+ if(!finalRows.length){$("apiTxt").textContent="Pehle NIC file process karo.";$("apiProg").style.display="block";return;}
+ // only rows that still miss SIM expiry / client (so a re-run just retries the gaps)
+ const imeis=[...new Set(finalRows.filter(r=>!clean(r[8])||!clean(r[13])).map(r=>clean(r[1]).replace(/\.0+$/,"")).filter(Boolean))];
+ if(!imeis.length){$("apiTxt").innerHTML="<span class='okk'>Sab rows mein data pehle se hai.</span>";$("apiProg").style.display="block";$("apiFill").style.width="100%";return;}
+ const ctl=new AbortController();apiAbort=ctl;
+ const total=imeis.length,t0=Date.now(),fmt=n=>n.toLocaleString("en-IN");
+ const okSet=new Set(),missSet=new Set(),errSet=new Set();
+ const byImei=new Map();finalRows.forEach(r=>{const k=imeiKey(r);if(!byImei.has(k))byImei.set(k,[]);byImei.get(k).push(r);});
+ let liveT=0,lastSave=Date.now();
+ const liveRender=()=>{if(liveT)return;liveT=setTimeout(()=>{liveT=0;render();if(Date.now()-lastSave>10000){lastSave=Date.now();saveState();}},perPage>=500?400:120);};
+ let doneAll=0,streak=0,streakMax=25,win=[],winErr=0,lastErr="",lastPaint=0,label="Fetching",passTotal=total,passDone=0,passT0=t0,maxRate=0;
+ $("apiFill").style.width="0%";$("apiTxt").textContent="Starting… 0 / "+fmt(total);
+ setApiUI(true);
+ const paint=force=>{
+  const now=Date.now();if(!force&&now-lastPaint<120)return;lastPaint=now;
+  $("apiFill").style.width=Math.round(Math.min(passDone/passTotal,1)*100)+"%";
+  const sec=(now-passT0)/1000,rate=passDone/Math.max(sec,.5);if(rate>maxRate)maxRate=rate;
+  const eta=rate>0?Math.ceil((passTotal-passDone)/rate):0;
+  $("apiTxt").textContent=label+"… "+fmt(passDone)+" / "+fmt(passTotal)+" · "+rate.toFixed(0)+"/sec"+(passDone<passTotal?" · ~"+(eta>=60?Math.ceil(eta/60)+" min":eta+" sec")+" left":"");
+ };
+ const onResult=(imei,out,e)=>{
+  passDone++;doneAll++;
+  okSet.delete(imei);missSet.delete(imei);errSet.delete(imei);
+  // connection health: sliding window of the last 100 results
+  win.push(e?1:0);winErr+=e?1:0;if(win.length>100)winErr-=win.shift();
+  if(e){errSet.add(imei);lastErr=e;}
+  else{
+   // accuracy guard: the item must carry exactly the searched IMEI
+   if(out&&out.n===imei){okSet.add(imei);applyApiItem(imei,out);const rs=byImei.get(imei);if(rs){rs.forEach(enrichRow);liveRender();}}
+   else missSet.add(imei);
+  }
+  if(streakMax!==Infinity&&win.length>=60&&winErr/win.length>=0.9){streak=1;ctl.abort();}
+  paint(false);
+ };
+ // one pass over a list of IMEIs, using Web Workers (fallback: page thread)
+ const runPass=async(list,nWorkers,conc)=>{
+  let queueIdx=0,viaInline=false;
+  const nextChunk=()=>{const c=list.slice(queueIdx,queueIdx+API_CHUNK);queueIdx+=c.length;return c;};
+  const runWorkers=()=>new Promise((resolve,reject)=>{
+   let url=null,pool=[],alive=0,gotAny=false,settled=false;
+   const finish=(ok,why)=>{if(settled)return;settled=true;pool.forEach(w=>{try{w.postMessage({t:"stop"});w.terminate();}catch(_){}});if(url)URL.revokeObjectURL(url);ok?resolve():reject(why);};
+   ctl.signal.addEventListener("abort",()=>finish(true));
+   try{url=URL.createObjectURL(new Blob([WORKER_SRC],{type:"text/javascript"}));}catch(x){return reject(x);}
+   const body=apiBody();
+   for(let n=0;n<nWorkers;n++){
+    let w;try{w=new Worker(url);}catch(x){return finish(false,x);}
+    pool.push(w);alive++;
+    const give=()=>{const c=nextChunk();if(!c.length){alive--;if(alive<=0)finish(true);return;}w.postMessage({t:"chunk",list:c,urls:API_URLS,body,conc});};
+    w.onmessage=ev=>{
+     const m=ev.data;gotAny=true;
+     if(m.t==="r")onResult(m.imei,m.out,m.err);
+     else if(m.t==="d"){if(!ctl.signal.aborted)give();}
+    };
+    w.onerror=()=>{if(!gotAny)finish(false,new Error("worker blocked"));};
+    give();
+   }
+  });
+  const runInline=async()=>{
+   const body=apiBody();
+   const worker=async()=>{
+    while(!ctl.signal.aborted){
+     const imei=list[queueIdx++];if(imei===undefined)return;
+     let out=null,e=null;
+     for(let t=0;t<3&&!ctl.signal.aborted;t++){
+      try{out=await searchImei(API_URLS,body,imei,ctl.signal);e=null;break;}
+      catch(x){if(ctl.signal.aborted)return;e=x.message||String(x);await new Promise(r=>setTimeout(r,250*(t+1)));}
+     }
+     onResult(imei,out,e);
+    }
+   };
+   await Promise.all(Array.from({length:Math.min(nWorkers*conc,100)},worker));
+  };
+  const before=passDone;
+  try{await runWorkers();}
+  catch(_){
+   // workers not allowed here (e.g. blocked blob workers): continue on the page thread
+   queueIdx=Math.max(0,Math.min(passDone-before,list.length));await runInline();
+  }
+ };
+ // pass 1: everything, 100 parallel
+ await runPass(imeis,API_WORKERS,API_CONC);
+ // verification passes: retry every failed or not-found IMEI more gently (up to 2 times)
+ streakMax=Infinity;
+ for(let p=1;p<=2&&!ctl.signal.aborted;p++){
+  const again=[...errSet,...missSet];
+  if(!again.length)break;
+  label="Verifying "+(p)+"/2";passTotal=again.length;passDone=0;passT0=Date.now();
+  await new Promise(r=>setTimeout(r,p*600));
+  await runPass(again,2,5);
+ }
+ const aborted429=streak>=1;
+ const stopped=ctl.signal.aborted&&!aborted429;apiAbort=null;
+ clearTimeout(liveT);liveT=0;enrich();render();saveState();setApiUI(false);
+ passDone=passTotal;paint(true);$("apiFill").style.width="100%";
+ const secs=Math.max(1,Math.round((Date.now()-t0)/1000)),avg=(total/secs).toFixed(0);
+ if(aborted429){
+  $("apiTxt").innerHTML="<span class='bad'>Portal API se connect nahi ho paya"+(lastErr?" ("+escapeHtml(lastErr)+")":"")+". Internet / portal access check karo, ya Raw Data file upload karo.</span>";
+ }else{
+  const pend=total-okSet.size-missSet.size-errSet.size;
+  $("apiTxt").innerHTML=(stopped?"Stopped · ":"<span class='okk'>Done in "+secs+"s · avg "+avg+"/sec · </span>")+
+   fmt(okSet.size)+" matched (exact IMEI)"+
+   (missSet.size?" · <b>"+fmt(missSet.size)+" not in portal</b> (checked 3 times)":"")+
+   (errSet.size?" · <span class='bad'>"+fmt(errSet.size)+" failed</span>":"")+
+   (pend>0?" · "+fmt(pend)+" not checked":"")+" of "+fmt(total)+" IMEIs";
+ }
+}
+$("apiGo").addEventListener("click",fetchFromApi);
+$("apiStop").addEventListener("click",()=>{if(apiAbort)apiAbort.abort();});
 
 /* ---- Persistence: processed data survives page reload (IndexedDB, in this browser only) ---- */
 let fileMeta=null;
@@ -662,12 +1198,15 @@ const DB={
 };
 function saveState(){
  const stats=["total","oddCount","evenCount","missing","oddMissing","evenMissing"].map(id=>$(id).textContent);
- DB.set("state",{finalRows,stats,fileMeta,workbookName,perPage,savedAt:Date.now()}).catch(()=>{});
+ DB.set(stateKey(),{ver:2,finalRows,stats,fileMeta,workbookName,perPage,savedAt:Date.now()}).catch(()=>{});
 }
 async function restoreState(){
  try{
-  const s=await DB.get("state");
+  const s=await DB.get(stateKey());
   if(!s||!s.finalRows||!s.finalRows.length)return;
+  if(s.ver!==2){ // older layout (11 status | 12 client | 13 nic ms | 14 reg ms) -> new layout
+   s.finalRows=s.finalRows.map(r=>r.length>=15||r.length===14?[...r.slice(0,11),(typeof r[14]==="number"?fmtD(r[14]):""),r[11]||"",r[12]||"",typeof r[13]==="number"?r[13]:""]:r);
+  }
   finalRows=s.finalRows;workbookName=s.workbookName||"Final_Data";fileMeta=s.fileMeta||null;
   if(s.perPage){perPage=s.perPage;$("perPage").value=String(perPage);}
   setStats(...s.stats);
@@ -678,7 +1217,49 @@ async function restoreState(){
   showMessage("Previous data restored ("+finalRows.length.toLocaleString("en-IN")+" records). Click Clear to remove it, or upload a new file.","ok");
  }catch(e){}
 }
-resetStats();render();restoreState();
+/* ---- Project selector (NIC is the only configured layout so far) ---- */
+const PROJECTS=[
+ {id:"nic",name:"NIC",ready:true},
+ {id:"upmining",name:"UP Mining",ready:false},
+ {id:"bihar",name:"Bihar Mining",ready:false},
+ {id:"wb",name:"WB Transport",ready:false},
+ {id:"raj",name:"Rajasthan Mining",ready:false}
+];
+let PROJ_ID="nic";
+try{const sv=localStorage.getItem("nicProject");if(PROJECTS.some(x=>x.id===sv))PROJ_ID=sv;}catch(e){}
+const curProj=()=>PROJECTS.find(x=>x.id===PROJ_ID)||PROJECTS[0];
+function projReady(){return curProj().ready;}
+function stateKey(){return PROJ_ID==="nic"?"state":"state_"+PROJ_ID;}
+function paintProject(){
+ const pr=curProj();
+ $("pname").textContent=pr.name;
+ $("brandName").textContent=pr.name+" Excel Formatter";
+ document.title=pr.name+" Excel Formatter | VLTD Activation Data";
+ $("pmenu").innerHTML=PROJECTS.map(x=>'<button type="button" class="po'+(x.id===PROJ_ID?' sel':'')+'" role="option" data-id="'+x.id+'"><i class="pc"></i>'+escapeHtml(x.name)+(x.ready?'':'<em>Not set up</em>')+'</button>').join("");
+}
+function setPMenu(open){$("psel").classList.toggle("open",open);$("pbtn").setAttribute("aria-expanded",open?"true":"false");}
+function switchProject(id){
+ if(id===PROJ_ID)return;
+ if(apiAbort)apiAbort.abort();
+ PROJ_ID=id;try{localStorage.setItem("nicProject",id);}catch(e){}
+ // clear what is on screen (each project keeps its own saved data)
+ lookup=new Map();vmap=new Map();pairMap=new Map();finalRows=[];sourceFile=null;fileMeta=null;page=1;
+ $("file").value="";$("fileinfo").classList.remove("show");$("lkinfo").textContent="";
+ $("process").disabled=true;$("download").disabled=true;$("search").disabled=true;$("search").value="";$("clear").disabled=true;
+ $("vfilter").value="all";$("processLabel").textContent="Process Excel File";
+ $("apiTxt").textContent="";$("apiProg").style.display="none";
+ $("message").className="message";$("message").textContent="";
+ resetStats();render();setStep(1);paintProject();
+ if(!projReady())showMessage(curProj().name+" ka source column mapping abhi set nahi hai. Mapping milte hi yahan add ho jaayegi; tab tak NIC use karo.","error");
+ else restoreState();
+}
+$("pbtn").addEventListener("click",e=>{e.stopPropagation();setPMenu(!$("psel").classList.contains("open"));});
+$("pmenu").addEventListener("click",e=>{const o=e.target.closest(".po");if(!o)return;setPMenu(false);switchProject(o.dataset.id);});
+document.addEventListener("click",e=>{if(!$("psel").contains(e.target))setPMenu(false);});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")setPMenu(false);});
+paintProject();
+resetStats();render();
+if(projReady())restoreState();else showMessage(curProj().name+" ka source column mapping abhi set nahi hai. Mapping milte hi yahan add ho jaayegi; tab tak NIC use karo.","error");
 </script>
 </body>
 </html>
