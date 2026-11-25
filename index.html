@@ -4,8 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NIC Excel Formatter | VLTD Activation Data</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22%3E%3Cpath fill=%22%23107c41%22 d=%22M14,7V.46c.91,.35,1.75,.88,2.46,1.59l3.48,3.49c.71,.71,1.24,1.55,1.59,2.46h-6.54c-.55,0-1-.45-1-1Zm8,3.49v8.51c0,2.76-2.24,5-5,5H7c-2.76,0-5-2.24-5-5V5C2,2.24,4.24,0,7,0h4.51c.16,0,.32,.01,.49,.02V7c0,1.65,1.35,3,3,3h6.98c.01,.16,.02,.32,.02,.49Zm-8.7,6.51l1.97-2.36c.35-.42,.3-1.05-.13-1.41-.43-.35-1.05-.3-1.41,.13l-1.73,2.08-1.73-2.08c-.35-.42-.98-.48-1.41-.13-.42,.35-.48,.98-.13,1.41l1.97,2.36-1.97,2.36c-.35,.42-.3,1.05,.13,1.41,.19,.16,.41,.23,.64,.23,.29,0,.57-.12,.77-.36l1.73-2.08,1.73,2.08c.2,.24,.48,.36,.77,.36,.23,0,.45-.08,.64-.23,.42-.35,.48-.98,.13-1.41l-1.97-2.36Z%22/%3E%3C/svg%3E">
+<link rel="alternate icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22%3E%3Cpath fill=%22%23107c41%22 d=%22M14,7V.46c.91,.35,1.75,.88,2.46,1.59l3.48,3.49c.71,.71,1.24,1.55,1.59,2.46h-6.54c-.55,0-1-.45-1-1Zm8,3.49v8.51c0,2.76-2.24,5-5,5H7c-2.76,0-5-2.24-5-5V5C2,2.24,4.24,0,7,0h4.51c.16,0,.32,.01,.49,.02V7c0,1.65,1.35,3,3,3h6.98c.01,.16,.02,.32,.02,.49Zm-8.7,6.51l1.97-2.36c.35-.42,.3-1.05-.13-1.41-.43-.35-1.05-.3-1.41,.13l-1.73,2.08-1.73-2.08c-.35-.42-.98-.48-1.41-.13-.42,.35-.48,.98-.13,1.41l1.97,2.36-1.97,2.36c-.35,.42-.3,1.05,.13,1.41,.19,.16,.41,.23,.64,.23,.29,0,.57-.12,.77-.36l1.73-2.08,1.73,2.08c.2,.24,.48,.36,.77,.36,.23,0,.45-.08,.64-.23,.42-.35,.48-.98,.13-1.41l-1.97-2.36Z%22/%3E%3C/svg%3E">
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f3f5f9;--surface:#ffffff;--surface2:#f7f9fc;--ink:#0f1c2e;--ink2:#41506a;--muted:#7a879b;
@@ -223,6 +227,87 @@ td.mono{font-family:var(--mono);font-size:12px}
 .apibar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brand),#5b8cff);transition:width .25s}
 .apitxt{margin-top:6px;font-size:11.5px;color:var(--muted);line-height:1.5}
 .apitxt .okk{color:var(--ok);font-weight:650}.apitxt .bad{color:var(--bad)}
+/* google sheet */
+.gshead{display:flex;align-items:center;gap:8px;margin-bottom:2px}
+.gshead b{font-size:13px}
+.gsst{margin-left:auto;font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gsst.off{background:var(--surface2);color:var(--muted);border:1px solid var(--line2)}
+.gsst.warn{background:var(--warn-soft);color:var(--warn)}
+.gsst.on{background:var(--ok-soft);color:var(--ok)}
+.btn.ic2{width:34px;height:34px;padding:0;flex:none;border-radius:9px;color:var(--ink2)}
+.btn.ic2 svg{width:16px;height:16px}
+.gslink{display:none;align-items:center;margin-top:10px;font-size:12.5px;font-weight:650;color:var(--brand);text-decoration:none}
+.gslink:hover{text-decoration:underline}
+.gslrow{display:none;align-items:center;gap:10px;margin-top:10px}
+.gslrow .gslink{display:inline-flex;margin-top:0;flex:none;white-space:nowrap}
+.gscopy{flex:1;min-width:0;display:flex;align-items:center;gap:6px;height:34px;padding:0 4px 0 10px;border:1px solid var(--line2);background:var(--surface);border-radius:10px}
+.gscopy input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;font-size:11.5px;color:var(--ink2);text-overflow:ellipsis}
+.gscopy.ok{border-color:var(--ok);box-shadow:0 0 0 3px rgba(16,150,100,.14)}
+.gscpbtn{position:relative;flex:none;width:26px;height:26px;display:grid;place-items:center;border:0;border-radius:7px;background:transparent;color:var(--ink2);cursor:pointer}
+.gscpbtn:hover{background:var(--brand-soft);color:var(--brand)}
+.gscpbtn svg{width:16px;height:16px;grid-area:1/1;transition:opacity .15s,transform .2s}
+.gscpbtn .tk{opacity:0;transform:scale(.4);color:#fff}
+.gscpbtn .tk circle{fill:var(--ok)}
+.gscpbtn .tk path{fill:none;stroke:#fff;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:24;stroke-dashoffset:24}
+.gscopy.ok .gscpbtn{background:transparent}
+.gscopy.ok .gscpbtn .cp{opacity:0;transform:scale(.4)}
+.gscopy.ok .gscpbtn .tk{opacity:1;transform:scale(1.25);animation:gstkpop .4s cubic-bezier(.2,.9,.3,1.4) both}
+.gscopy.ok .gscpbtn .tk path{animation:gsudraw .4s .1s ease forwards}
+@keyframes gstkpop{from{transform:scale(.3)}to{transform:scale(1.25)}}
+.gs .full{margin-top:10px}
+.gsbody{padding:18px 22px 22px;overflow:auto;display:flex;flex-direction:column;gap:16px}
+.gsstep{display:flex;gap:14px}
+.gsstep>i{width:28px;height:28px;border-radius:50%;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-style:normal;font-weight:800;font-size:13px;flex:none}
+.gsstep>div>b{display:block;font-size:13.5px;margin-bottom:3px}
+.gsstep span b{display:inline;font-size:inherit;margin:0}
+.gsstep span{display:block;font-size:12.5px;color:var(--ink2);line-height:1.6}
+.gsstep div{min-width:0;flex:1}
+.gsstep .k{font-style:normal;font-family:var(--mono);font-size:11.5px;background:var(--surface2);border:1px solid var(--line);padding:0 6px;border-radius:6px;white-space:nowrap}
+.gsstep textarea{width:100%;margin-top:8px;font-family:var(--mono);font-size:11px;line-height:1.5;border:1px solid var(--line2);background:var(--surface2);color:var(--ink);border-radius:10px;padding:10px 12px;resize:vertical}
+.gsbar{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12.5px;color:var(--ink2);background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:6px 8px 6px 12px}
+.gssteps12{display:flex;flex-direction:column;gap:inherit}
+.gssteps12[hidden]{display:none}
+.gseye{flex:none;width:32px;height:32px;display:grid;place-items:center;border:1px solid var(--line2);background:var(--surface);color:var(--ink2,#475569);border-radius:9px;cursor:pointer}
+.gseye:hover{border-color:var(--brand);color:var(--brand)}
+.gsu{position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(8,16,32,.55);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.gsu.show{display:flex;animation:mfade .18s ease-out}
+.gsu .gsucard{width:min(360px,100%);background:var(--surface);border-radius:20px;padding:30px 26px 24px;text-align:center;box-shadow:0 30px 80px rgba(8,16,32,.35);animation:gsupop .28s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes gsupop{from{transform:scale(.92);opacity:0}to{transform:none;opacity:1}}
+.gsu .ring{position:relative;width:96px;height:96px;margin:0 auto 16px}
+.gsu .ring svg{width:96px;height:96px;display:block}
+.gsu .rtrack{fill:none;stroke:var(--brand-soft);stroke-width:7}
+.gsu .rbar{fill:none;stroke:var(--brand);stroke-width:7;stroke-linecap:round;stroke-dasharray:264;stroke-dashoffset:264;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset .35s ease}
+.gsu .rbar.ind{animation:gsuspin 1.1s linear infinite;stroke-dasharray:70 264;stroke-dashoffset:0}
+@keyframes gsuspin{from{transform:rotate(-90deg)}to{transform:rotate(270deg)}}
+.gsu .rpct{position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:20px;color:var(--brand)}
+.gsu .rico{position:absolute;inset:0;display:none;place-items:center}
+.gsu .rico svg{width:96px;height:96px}
+.gsu.done .rtrack,.gsu.done .rbar,.gsu.done .rpct,.gsu.bad .rtrack,.gsu.bad .rbar,.gsu.bad .rpct,.gsu.info .rtrack,.gsu.info .rbar,.gsu.info .rpct{display:none}
+.gsu.done .rico.ok,.gsu.bad .rico.er,.gsu.info .rico.nf{display:grid}
+.gsu .rico circle{fill:var(--ok);transform-origin:50% 50%;animation:gsucirc .45s cubic-bezier(.2,.9,.3,1.3) both}
+.gsu .rico.er circle{fill:#dc2626}.gsu .rico.nf circle{fill:#d97706}
+@keyframes gsucirc{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+.gsu .rico path{fill:none;stroke:#fff;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:gsudraw .45s .28s ease forwards}
+@keyframes gsudraw{to{stroke-dashoffset:0}}
+.gsu.done .ring::after{content:"";position:absolute;inset:0;border-radius:50%;border:3px solid var(--ok);animation:gsuburst .9s .2s ease-out both}
+@keyframes gsuburst{from{transform:scale(.9);opacity:.7}to{transform:scale(1.6);opacity:0}}
+.gsu .gsut{font-size:17px;font-weight:800;color:var(--ink)}
+.gsu .gsus{margin-top:6px;font-size:13px;line-height:1.55;color:var(--ink2)}
+.gsu .gsubar{height:6px;border-radius:99px;background:var(--brand-soft);overflow:hidden;margin-top:16px}
+.gsu .gsubar i{display:block;height:100%;width:0;background:var(--brand);border-radius:99px;transition:width .35s ease}
+.gsu.done .gsubar,.gsu.bad .gsubar,.gsu.info .gsubar{display:none}
+.gsu .gsuclose{display:none;margin:18px auto 0}
+.gsu.bad .gsuclose{display:inline-flex}
+.gsu .gsuauto{display:none;height:3px;border-radius:99px;background:var(--line);margin-top:18px;overflow:hidden}
+.gsu .gsuauto i{display:block;height:100%;background:var(--ok);width:100%;transform-origin:left}
+.gsu.done .gsuauto,.gsu.info .gsuauto{display:block}
+.gsu.done .gsuauto i,.gsu.info .gsuauto i{animation:gsuauto 2.4s linear forwards}
+@keyframes gsuauto{to{transform:scaleX(0)}}
+.gsline{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.gsline input{flex:1;min-width:220px;border:1px solid var(--line2);background:var(--surface2);color:var(--ink);border-radius:10px;padding:10px 12px;font-size:13px;outline:none}
+.gsline input:focus{border-color:var(--brand);background:var(--surface);box-shadow:0 0 0 3px var(--brand-soft)}
+.gsmsg{margin-top:7px;font-size:12px;line-height:1.5;color:var(--muted)}
+.gsmsg.okk{color:var(--ok);font-weight:600}.gsmsg.bad{color:var(--bad)}
 /* excel preview modal */
 .mo{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(8,16,32,.55);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
 .mo.show{display:flex;animation:mfade .18s ease-out}
@@ -287,12 +372,190 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:22px 16px 3
   .thead{padding:14px}
   .fmenu{right:auto;left:0}
 }
+
+/* ===== UI refresh (visual only) ===== */
+:root{--font:"Inter","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --brand:#1d5ee0;--brand-d:#174bc0;--brand-soft:#e9f0fe;--navy2:#0f2147;
+  --line:#e4eaf5;--line2:#d5def0;--ink:#0d1b3a;--ink2:#46547a;--muted:#7482a3;
+  --grad:linear-gradient(180deg,#2a6df0 0,#1a55d6 100%);--gradok:linear-gradient(180deg,#18a46c 0,#0c8556 100%);
+  --shadow:0 1px 2px rgba(20,45,100,.04),0 10px 30px rgba(20,45,100,.07)}
+body{background:radial-gradient(1200px 380px at 88% -60px,#e4edff 0,transparent 70%),linear-gradient(180deg,#f7f9ff 0,#f1f5fc 100%);background-attachment:fixed;font-size:14px}
+button,input,select{font-family:inherit}
+html{background:#f1f5fc;min-height:100%}
+/* header */
+.top{background:transparent;color:var(--ink);position:relative;z-index:60}
+.top::before{content:"";position:absolute;inset:0;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='130' viewBox='0 0 900 130' fill='none'%3E%3Cpath d='M0 118C140 70 250 112 380 76S620 18 760 40 880 6 900 0' stroke='%231d5ee0' stroke-opacity='.10' stroke-width='1.4'/%3E%3Cpath d='M0 128C150 84 262 124 392 92S630 36 768 56 888 22 900 14' stroke='%231d5ee0' stroke-opacity='.08' stroke-width='1.4'/%3E%3Cpath d='M0 108C130 56 240 100 372 60S612 6 752 28 874 -6 900 -14' stroke='%231d5ee0' stroke-opacity='.07' stroke-width='1.4'/%3E%3C/svg%3E") right top/900px 130px no-repeat}
+.top-in{max-width:none;padding:18px 28px 14px;position:relative}
+.brand{gap:16px}
+.logo{width:54px;height:54px;border-radius:15px;font-size:21px;font-weight:800;letter-spacing:.3px;color:#fff;background:linear-gradient(145deg,#2f7bff 0,#1648c8 100%);box-shadow:0 8px 18px rgba(29,94,224,.32),inset 0 1px 0 rgba(255,255,255,.28)}
+.brand>div:last-child{padding-left:18px;border-left:1.5px solid var(--line2);line-height:1.2}
+.brand b{font-size:29px;font-weight:800;letter-spacing:-.6px;color:var(--navy2);line-height:1.15}
+.brand b em{font-style:normal;color:var(--brand)}
+.brand span{display:block;margin-top:3px;font-size:15px;font-style:italic;font-weight:500;color:var(--ink2)}
+.pbtn{height:46px;padding:0 16px 0 18px;gap:12px;border-radius:13px;border:1px solid var(--line2);background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(20,45,100,.06)}
+.pbtn:hover,.psel.open .pbtn{background:#fff;border-color:var(--brand)}
+.pbtn .pk{font-size:14px;font-weight:500;letter-spacing:.8px;color:var(--ink2)}
+.pbtn b{font-size:22px;font-weight:800;color:var(--brand);letter-spacing:.2px}
+.pbtn svg{width:17px;height:17px;color:var(--navy2)}
+/* steps */
+.hero{background:none}
+.hero-in{max-width:none;padding:6px 28px 0}
+.steps{gap:16px}
+.step{position:relative;gap:16px;padding:15px 22px;min-height:68px;border-radius:16px;background:linear-gradient(180deg,#fff 0,#f8faff 100%);border:1px solid var(--line);box-shadow:var(--shadow)}
+.step b{font-size:18px;font-weight:700;color:var(--navy2);line-height:1.2}
+.step span{font-size:14px;color:var(--ink2)}
+.step .n{width:42px;height:42px;font-size:17px;font-weight:700;background:#fff;color:var(--muted);border:1.5px solid var(--line2)}
+.step .chv{margin-left:auto;width:24px;height:24px;color:#8da2cc;flex:none}
+.step.done .n{background:var(--gradok);border-color:transparent;color:#fff;box-shadow:0 4px 10px rgba(15,138,95,.28);font-size:20px}
+.step.active{border:2px solid var(--brand);background:linear-gradient(180deg,#f4f8ff 0,#e9f1ff 100%);box-shadow:0 0 0 4px rgba(29,94,224,.10),0 10px 26px rgba(29,94,224,.16)}
+.step.active .n{background:var(--grad);border-color:transparent;color:#fff;box-shadow:0 4px 12px rgba(29,94,224,.38)}
+/* layout */
+main{padding:22px 28px 10px}
+.layout{grid-template-columns:322px minmax(0,1fr);gap:16px}
+.card{border-radius:18px;border:1px solid var(--line);background:#fff}
+.side{padding:20px 18px}
+.card h3{font-size:18px;font-weight:800;color:var(--navy2);letter-spacing:-.2px}
+.side h3{margin-bottom:14px}
+.drop{border:1.5px dashed #7ea4f0;background:linear-gradient(180deg,#f4f8ff,#eef4ff);border-radius:14px;padding:20px 14px 16px}
+.drop:hover,.drop.drag{border-color:var(--brand);background:#e9f1ff}
+.drop .ic{width:56px;height:56px;border-radius:50%;background:#dbe8ff;color:var(--brand);margin-bottom:12px}
+.drop .ic svg{width:28px;height:28px}
+.drop strong{font-size:14px;font-weight:700;color:var(--navy2)}
+.drop small{color:var(--ink2);font-size:13px}
+.fileinfo{margin-top:12px;padding:10px 12px;border-radius:12px;background:#fff;border:1px solid var(--line);box-shadow:0 1px 3px rgba(20,45,100,.05);gap:12px}
+.fileinfo .fi{width:36px;height:40px;border-radius:7px;background:#e3f6ec;color:#12804f;font-size:10px;border:1px solid #bfe6d2;position:relative}
+.fileinfo>div:nth-child(2){flex:1;min-width:0}
+.fileinfo b{font-size:14px;font-weight:600;color:var(--navy2)}
+.fileinfo span{font-size:12.5px;color:var(--ink2)}
+.fitrash{flex:none;width:34px;height:34px;border:0;border-radius:9px;background:transparent;color:var(--ink2);display:grid;place-items:center;cursor:pointer;transition:.15s}
+.fitrash svg{width:19px;height:19px}
+.fitrash:hover{background:#fdeceb;color:var(--bad)}
+.lk{margin-top:14px;padding-top:0;border-top:0}
+.lk span.h{font-size:12.5px;color:var(--ink2);line-height:1.5;margin:0 0 10px}
+.btn{border-radius:11px;font-size:14px;font-weight:700;padding:11px 14px}
+.primary{background:var(--grad);box-shadow:0 6px 14px rgba(29,94,224,.28),inset 0 1px 0 rgba(255,255,255,.18)}
+.primary:hover:not(:disabled){background:var(--grad);filter:brightness(.95)}
+.success{background:var(--gradok);box-shadow:0 6px 14px rgba(15,138,95,.26),inset 0 1px 0 rgba(255,255,255,.18)}
+.ghost{background:#fff;color:var(--navy2);border:1px solid var(--line2)}
+.ghost:hover:not(:disabled){background:#f6f9ff;border-color:#b9c9ea}
+.full{margin-top:10px}
+/* feed row = one bordered control */
+.lkrow{gap:0;margin-top:0;border:1px solid var(--line2);border-radius:12px;background:#fff;overflow:visible}
+.lkrow label.btn{border:0;border-radius:12px 0 0 12px;justify-content:flex-start;gap:12px;padding:10px 12px;text-align:left;font-size:13px;font-weight:700;line-height:1.25;background:transparent;color:var(--navy2);box-shadow:none}
+.lkrow label.btn .lic{width:26px;height:26px;flex:none;color:var(--brand)}
+.lkrow .ic{width:52px;border:0;border-left:1px solid var(--line2);border-radius:0 12px 12px 0;background:transparent;color:var(--brand);box-shadow:none}
+.lkrow .ic:hover:not(:disabled){background:var(--brand-soft)}
+.lkrow .ic svg{width:21px;height:21px}
+.lk label.btn{margin-top:0}
+#process,#download{margin-top:10px;padding:12px 14px;font-size:15px}
+#process{margin-top:12px}
+.message.ok,.message.error{display:flex;align-items:flex-start;gap:10px;margin-top:12px;border-radius:12px;padding:11px 12px;font-size:12.5px;line-height:1.5}
+.message.ok{background:#eaf8f1;border:1px solid #c5ead8;color:#0b6b48}
+.message.error{background:var(--bad-soft)}
+.message.ok::before,.message.error::before{content:"";flex:none;width:20px;height:20px;margin-top:1px;border-radius:50%;background:#0f8a5f url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-8.5'/%3E%3C/svg%3E") center/13px no-repeat}
+.message.error::before{background:#c0392b url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round'%3E%3Cpath d='M12 6v8M12 18v.2'/%3E%3C/svg%3E") center/13px no-repeat}
+.bic{width:20px;height:20px;color:var(--brand)}
+.bic.gsg{color:#0f9d58}
+#apiGo,#gsCreate{justify-content:center}
+.gshead b{font-size:14px;font-weight:800;color:var(--navy2)}
+.gsst{font-size:11.5px;max-width:140px}
+.gsst.on{background:#e3f6ec;color:#0b7a50}
+.gshead .ic2{width:34px;height:34px;padding:0;border-radius:10px;flex:none}
+details.map{margin-top:16px;padding-top:12px}
+details.map summary{font-size:13px;font-weight:700;color:var(--navy2)}
+.note{font-size:12px;color:var(--ink2)}
+.apibar{background:#eef3fc}
+/* stats */
+.stats{gap:14px;margin-bottom:16px}
+.stat{display:grid;grid-template-columns:60px minmax(0,1fr);column-gap:16px;align-items:center;padding:16px 20px;border-radius:18px;background:linear-gradient(135deg,var(--sb1) 0,var(--sb2) 100%);border:1px solid var(--sbd);box-shadow:0 1px 2px rgba(20,45,100,.03)}
+.stat::before{display:none}
+.stat .si{grid-row:1/4;width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:var(--si-bg);color:var(--si-c)}
+.stat .si svg{width:28px;height:28px}
+.stat span{font-size:12.5px;font-weight:700;letter-spacing:.5px;color:var(--ink2);grid-column:2}
+.stat b{font-size:32px;font-weight:800;letter-spacing:-.6px;margin:2px 0 1px;color:var(--navy2);grid-column:2;line-height:1.1}
+.stat small{font-size:13.5px;color:var(--ink2);grid-column:2}
+.stat.s-total{--sb1:#eef4ff;--sb2:#f8fbff;--sbd:#d9e5fb;--si-bg:#d9e6ff;--si-c:#2a62e6}
+.stat.s-odd{--sb1:#f3efff;--sb2:#faf8ff;--sbd:#e2d9fa;--si-bg:#e4dcfc;--si-c:#7253dc}
+.stat.s-even{--sb1:#ecf9f2;--sb2:#f7fcf9;--sbd:#cdeedd;--si-bg:#d3f1e1;--si-c:#169460}
+.stat.s-warn{--sb1:#fff6e5;--sb2:#fffaf0;--sbd:#f6e1b6;--si-bg:#fde8b9;--si-c:#e08a00}
+.stat.s-gap{--sb1:#fff0ef;--sb2:#fff7f6;--sbd:#f6d2cf;--si-bg:#fbd9d6;--si-c:#e0433b}
+.stat.s-warn b{color:#c46f00}
+.stat.s-gap b{color:#b3261e}
+/* table card */
+.tcard{border-radius:18px}
+.thead{padding:16px 18px 14px;border-bottom:0}
+.thead h3{font-size:20px;gap:12px}
+.sq{background:var(--grad);color:#fff;font-size:12.5px;padding:3px 11px;border-radius:99px}
+.cnt{font-size:13px;color:var(--ink2);font-weight:500}
+.fbtn{height:40px;padding:0 14px;border-radius:11px;background:#fff;border:1px solid var(--line2);font-weight:600;color:var(--navy2)}
+.fbtn svg{color:var(--navy2)}
+.search{background:#fff;border-radius:11px;border:1px solid var(--line2);padding:10px 12px 10px 38px;font-size:13px}
+.searchbox{width:300px}
+.clearbtn{height:40px;padding:0 16px;font-weight:700;color:var(--navy2)}
+.twrap{padding:0 14px 6px;max-height:560px}
+table{font-size:13px;min-width:1560px}
+th{background:linear-gradient(180deg,#2a6df0 0,#1a55d6 100%);color:#fff;border-bottom:0;padding:11px 14px;font-size:11.5px;font-weight:700;letter-spacing:.3px}
+th:first-child{border-radius:11px 0 0 11px}th:last-child{border-radius:0 11px 11px 0}
+td{padding:8.5px 14px;border-bottom:0;color:var(--navy2)}
+tbody tr:nth-child(even) td{background:#f3f7ff}
+tbody tr:hover td{background:#e9f1ff}
+td.sno{color:var(--navy2);font-weight:500}
+td.mono{font-family:inherit;font-size:13px}
+.status{background:#e1f6ea;color:#0f7f52;padding:4px 11px;font-size:11.5px;font-weight:700}
+.twrap::-webkit-scrollbar{height:10px;width:10px}
+.twrap::-webkit-scrollbar-track{background:#e9eefa;border-radius:99px}
+.twrap::-webkit-scrollbar-thumb{background:#9db6ea;border-radius:99px;border:2px solid #e9eefa}
+.twrap{scrollbar-color:#9db6ea #e9eefa;scrollbar-width:thin}
+.tfoot{padding:14px 18px;border-top:0}
+.rpp select{height:40px;border-radius:10px;border:1px solid var(--line2);font-weight:600;color:var(--navy2)}
+.pg{border-radius:10px;min-width:36px;height:36px;color:var(--brand);background:#fff;border:1px solid var(--line2);font-weight:600}
+.pg.on{background:var(--grad);border-color:transparent;color:#fff;box-shadow:0 4px 10px rgba(29,94,224,.3)}
+.pg:disabled{color:#b6c4e2;background:#f6f8fd;border-color:var(--line)}
+/* footer */
+footer{display:flex;align-items:center;justify-content:center;gap:22px;padding:20px 28px 28px;color:var(--ink2);font-size:12px}
+footer i{flex:1;max-width:380px;height:1px;background:linear-gradient(90deg,transparent,#c5d2ec,transparent)}
+@media(max-width:1000px){.layout{grid-template-columns:1fr}.brand b{font-size:24px}}
+@media(max-width:700px){
+  .top-in,.hero-in,main{padding-left:14px;padding-right:14px}
+  .brand>div:last-child{padding-left:12px}.brand b{font-size:19px}.logo{width:44px;height:44px;font-size:17px}
+  .step .chv{display:none}.step b{font-size:15px}
+  .stat{grid-template-columns:48px minmax(0,1fr);column-gap:12px;padding:12px 14px}
+  .stat .si{width:48px;height:48px}.stat .si svg{width:23px;height:23px}.stat b{font-size:24px}
+  footer i{display:none}
+}
+@media(prefers-color-scheme:dark){
+  :root{--ink:#e8edf6;--ink2:#a9b6cc;--muted:#76849c;--navy2:#e8edf6;--line:#1f2c45;--line2:#2a3a58;--brand:#5b8cff;--brand-soft:#17254a}
+  body{background:#0b1220}
+  .step,.step.active,.drop,.fileinfo,.lkrow,.ghost,.fbtn,.search,.pg,.pbtn,.rpp select{background:var(--surface)}
+  .stat{background:var(--surface2);border-color:var(--line)}
+  tbody tr:nth-child(even) td{background:var(--surface2)}
+  .message.ok{background:#0f2b25;border-color:#1c4a3d;color:#3ecf9a}
+}
+
+/* settings + 90% view */
+html{zoom:.9}
+.topr{display:flex;align-items:center;gap:10px}
+.setbtn{width:46px;height:46px;border-radius:13px;border:1px solid var(--line2);background:#fff;color:var(--navy2);display:grid;place-items:center;cursor:pointer;box-shadow:0 2px 8px rgba(20,45,100,.06);transition:.15s}
+.setbtn svg{width:21px;height:21px}
+.setbtn:hover{border-color:var(--brand);color:var(--brand)}
+.setbody{padding:18px 22px 22px;overflow:auto}
+.setbody h4{margin:0 0 6px;font-size:14px;font-weight:800;color:var(--navy2)}
+.setmap .mrow{padding:10px 0}
+.setbody .note{margin-top:14px}
+@media(prefers-color-scheme:dark){.setbtn{background:var(--surface)}}
+
+/* logo: plain Excel file icon, no background */
+.logo{background:none!important;box-shadow:none!important;border-radius:0;width:50px;height:50px;color:#107c41;display:grid;place-items:center}
+.logo svg{width:100%;height:100%;display:block}
+@media(max-width:700px){.logo{width:40px;height:40px}}
+
 </style>
 </head>
 <body>
 
 <div class="top"><div class="top-in">
-  <div class="brand"><div class="logo">VL</div><div><b id="brandName">NIC Excel Formatter</b><span>VLTD Activation Data · Odd / Even Record Arranger</span></div></div>
+  <div class="brand"><div class="logo" role="img" aria-label="Excel"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14,7V.46c.91,.35,1.75,.88,2.46,1.59l3.48,3.49c.71,.71,1.24,1.55,1.59,2.46h-6.54c-.55,0-1-.45-1-1Zm8,3.49v8.51c0,2.76-2.24,5-5,5H7c-2.76,0-5-2.24-5-5V5C2,2.24,4.24,0,7,0h4.51c.16,0,.32,.01,.49,.02V7c0,1.65,1.35,3,3,3h6.98c.01,.16,.02,.32,.02,.49Zm-8.7,6.51l1.97-2.36c.35-.42,.3-1.05-.13-1.41-.43-.35-1.05-.3-1.41,.13l-1.73,2.08-1.73-2.08c-.35-.42-.98-.48-1.41-.13-.42,.35-.48,.98-.13,1.41l1.97,2.36-1.97,2.36c-.35,.42-.3,1.05,.13,1.41,.19,.16,.41,.23,.64,.23,.29,0,.57-.12,.77-.36l1.73-2.08,1.73,2.08c.2,.24,.48,.36,.77,.36,.23,0,.45-.08,.64-.23,.42-.35,.48-.98,.13-1.41l-1.97-2.36Z"/></svg></div><div><b id="brandName"><em>NIC</em> Excel Formatter</b><span>VLTD Activation Data • Odd / Even Record Arranger</span></div></div>
+  <div class="topr">
   <div class="psel" id="psel">
     <button class="pbtn" id="pbtn" type="button" aria-haspopup="listbox" aria-expanded="false">
       <span class="pk">Project</span><b id="pname">NIC</b>
@@ -300,12 +563,14 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:22px 16px 3
     </button>
     <div class="pmenu" id="pmenu" role="listbox" aria-label="Select project"></div>
   </div>
+  <button class="setbtn" id="setOpen" type="button" title="Settings" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+  </div>
 </div></div>
 
 <div class="hero"><div class="hero-in">
   <div class="steps">
-    <div class="step active" id="st1"><div class="n">1</div><div><b>Upload</b><span>Select the NIC .xlsx / .xls</span></div></div>
-    <div class="step" id="st2"><div class="n">2</div><div><b>Process</b><span>Arrange Odd &amp; Even records</span></div></div>
+    <div class="step active" id="st1"><div class="n">1</div><div><b>Upload</b><span>Select the NIC .xlsx / .xls</span></div><svg class="chv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7l5 5-5 5M12 7l5 5-5 5"/></svg></div>
+    <div class="step" id="st2"><div class="n">2</div><div><b>Process</b><span>Arrange Odd &amp; Even records</span></div><svg class="chv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7l5 5-5 5M12 7l5 5-5 5"/></svg></div>
     <div class="step" id="st3"><div class="n">3</div><div><b>Download</b><span>Get the final Excel</span></div></div>
   </div>
 </div></div>
@@ -313,7 +578,7 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:22px 16px 3
 <main>
   <div class="layout">
     <aside class="card side">
-      <h3>Source file</h3>
+      <h3>Source File</h3>
       <div class="drop" id="drop">
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg></div>
         <strong>Choose a file or drop it here</strong>
@@ -322,9 +587,9 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:22px 16px 3
       </div>
       <div class="fileinfo" id="fileinfo"></div>
       <div class="lk">
-        <span class="h">Feed an Excel / CSV with IMEI or Vehicle No plus Vehicle Registration Date (SIM dates, Client, Vehicle Age optional). Matching rows and Registration Status update at once.</span>
+        <span class="h">Upload Excel/CSV to auto-match vehicles and update registration status.</span>
         <div class="lkrow">
-          <label class="btn ghost" for="lkfile">Upload Vehicle Registration Date Excel</label>
+          <label class="btn ghost" for="lkfile"><svg class="lic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M8 14h3M13 14h3M8 17.5h3"/></svg><span>Upload Vehicle Registration Date Excel</span></label>
           <button class="btn ghost ic" id="tplDl" type="button" title="Download template" aria-label="Download template" aria-haspopup="menu" aria-expanded="false">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5"/><path d="M4 18v1a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-1"/></svg>
           </button>
@@ -346,34 +611,37 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:22px 16px 3
       <div class="lk">
         <b style="display:none">Portal data · SIM dates, Client, Vehicle Age</b>
         <span class="h" style="display:none">Searched live on the portal (api/search) by IMEI. It runs automatically after processing and each result appears in the table as soon as it arrives.</span>
-        <button class="btn ghost full" id="apiGo" type="button">Fetch from Portal API</button>
+        <button class="btn ghost full" id="apiGo" type="button"><svg class="bic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 15v-4a1.5 1.5 0 0 1 3 0v4M7 13h3M13 9h3a1.5 1.5 0 0 1 0 3h-3M13 9v6"/></svg>Fetch from Portal API</button>
         <button class="btn ghost full" id="apiStop" type="button" style="display:none">Stop</button>
         <div class="apiprog" id="apiProg"><div class="apibar"><i id="apiFill"></i></div><div class="apitxt" id="apiTxt"></div></div>
       </div>
-
-      <details class="map">
-        <summary>Source column mapping</summary>
-        <div style="margin-top:8px">
-          <div class="mrow"><code>odd / even</code><span>S.No.</span></div>
-          <div class="mrow"><code>sorting_1</code><span>IMEI No. (both)</span></div>
-          <div class="mrow"><code>odd 2 / even 2</code><span>Device Serial No.</span></div>
-          <div class="mrow"><code>odd 3 / even 3</code><span>Activation Status</span></div>
-          <div class="mrow"><code>odd 4 / even 4</code><span>Activation Date</span></div>
-          <div class="mrow"><code>odd 5 / even 5</code><span>Vehicle Reg No (VLTD)</span></div>
-          <div class="mrow"><code>odd 6 / even 6</code><span>Vehicle Reg No (Vahan)</span></div>
+      <div class="lk gs">
+        <div class="gshead"><b>Google Sheet</b><span class="gsst off" id="gsStatus">Setup needed</span>
+          <button class="btn ghost ic2" id="gsSetup" type="button" title="Google Sheet setup" aria-label="Google Sheet setup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
         </div>
-      </details>
-      <p class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Your file never leaves this device. Keep the source column order consistent with the mapping above.</span></p>
-    </aside>
+        <button class="btn ghost full" id="gsCreate" type="button"><svg class="bic gsg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M4 9h16M4 14.5h16M10 9v12"/></svg>Create Google Sheet</button>
+        <button class="btn primary full" id="gsUpload" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V5M7.5 9.5L12 5l4.5 4.5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>Upload to Google Sheet</button>
+        <div class="gslrow" id="gsLRow">
+          <a class="gslink" id="gsLink" href="#" target="_blank" rel="noopener">Open Google Sheet ↗</a>
+          <div class="gscopy" id="gsCopyBox"><input id="gsLinkTxt" type="text" readonly spellcheck="false" aria-label="Google Sheet link" title="Google Sheet link">
+            <button class="gscpbtn" id="gsLinkCp" type="button" title="Copy link" aria-label="Copy link">
+              <svg class="cp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>
+              <svg class="tk" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M7 12.5l3.3 3.3L17 9"/></svg>
+            </button></div></div>
+        <div class="apiprog" id="gsProg"><div class="apibar"><i id="gsFill"></i></div><div class="apitxt" id="gsTxt"></div></div>
+        <div class="lkinfo" id="gsInfo"></div>
+      </div>
+
+</aside>
 
     <section style="min-width:0">
       <div class="stats">
-        <div class="card stat s-total"><span>Total records</span><b id="total">0</b><small>After removing duplicates</small></div>
-        <div class="card stat s-odd"><span>Odd records</span><b id="oddCount">0</b><small>From the Odd block</small></div>
-        <div class="card stat s-even"><span>Even records</span><b id="evenCount">0</b><small>From the Even block</small></div>
-        <div class="card stat s-warn" id="cMissing"><span>Mapping missing</span><b id="missing">0</b><small>VLTD vehicle number blank</small></div>
-        <div class="card stat s-gap" id="cOdd"><span>Odd S.No. missing</span><b id="oddMissing">0</b><small>Gaps in odd sequence</small></div>
-        <div class="card stat s-gap" id="cEven"><span>Even S.No. missing</span><b id="evenMissing">0</b><small>Gaps in even sequence</small></div>
+        <div class="card stat s-total"><i class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l9 5-9 5-9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 16.5l9 5 9-5"/></svg></i><span>Total records</span><b id="total">0</b><small>After removing duplicates</small></div>
+        <div class="card stat s-odd"><i class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l9 5-9 5-9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 16.5l9 5 9-5"/></svg></i><span>Odd records</span><b id="oddCount">0</b><small>From the Odd block</small></div>
+        <div class="card stat s-even"><i class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l9 5-9 5-9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 16.5l9 5 9-5"/></svg></i><span>Even records</span><b id="evenCount">0</b><small>From the Even block</small></div>
+        <div class="card stat s-warn" id="cMissing"><i class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5L2.5 20h19z"/><path d="M12 10v4.5M12 17.5v.1"/></svg></i><span>Mapping missing</span><b id="missing">0</b><small>VLTD vehicle number blank</small></div>
+        <div class="card stat s-gap" id="cOdd"><i class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h11M4 12h8M4 18h8"/><path d="M15.5 14.5l5 5M20.5 14.5l-5 5"/></svg></i><span>Odd S.No. missing</span><b id="oddMissing">0</b><small>Gaps in odd sequence</small></div>
+        <div class="card stat s-gap" id="cEven"><i class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h11M4 12h8M4 18h8"/><path d="M18 14v6M15 17h6"/></svg></i><span>Even S.No. missing</span><b id="evenMissing">0</b><small>Gaps in even sequence</small></div>
       </div>
 
       <div class="card tcard">
@@ -444,7 +712,74 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:22px 16px 3
     </div>
   </div>
 </div>
-<footer>NIC Excel Formatter · Final output: 14-column VLTD activation register</footer>
+<div class="gsu" id="gsu" role="dialog" aria-modal="true" aria-live="polite" aria-labelledby="gsuT">
+  <div class="gsucard">
+    <div class="ring">
+      <svg viewBox="0 0 100 100"><circle class="rtrack" cx="50" cy="50" r="42"/><circle class="rbar" id="gsuBar" cx="50" cy="50" r="42"/></svg>
+      <div class="rpct" id="gsuPct">0%</div>
+      <div class="rico ok"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44"/><path d="M30 52l14 14 27-30"/></svg></div>
+      <div class="rico er"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44"/><path d="M34 34l32 32M66 34L34 66"/></svg></div>
+      <div class="rico nf"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44"/><path d="M50 30v24M50 68v1"/></svg></div>
+    </div>
+    <div class="gsut" id="gsuT">Uploading…</div>
+    <div class="gsus" id="gsuS"></div>
+    <div class="gsubar"><i id="gsuFill"></i></div>
+    <div class="gsuauto"><i></i></div>
+    <button class="btn ghost gsuclose" id="gsuClose" type="button">Close</button>
+  </div>
+</div>
+<div class="mo" id="setmo" role="dialog" aria-modal="true" aria-labelledby="setTitle">
+  <div class="md" style="width:min(560px,100%)">
+    <div class="mhead">
+      <div class="xi" style="background:var(--brand-soft);color:var(--brand)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+      <div class="mtxt"><b id="setTitle">Settings</b><span>Source column mapping used to read the NIC workbook.</span></div>
+      <button class="mx" id="setClose" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="setbody">
+      <h4>Source column mapping</h4>
+      <div class="setmap">
+          <div class="mrow"><code>odd / even</code><span>S.No.</span></div>
+          <div class="mrow"><code>sorting_1</code><span>IMEI No. (both)</span></div>
+          <div class="mrow"><code>odd 2 / even 2</code><span>Device Serial No.</span></div>
+          <div class="mrow"><code>odd 3 / even 3</code><span>Activation Status</span></div>
+          <div class="mrow"><code>odd 4 / even 4</code><span>Activation Date</span></div>
+          <div class="mrow"><code>odd 5 / even 5</code><span>Vehicle Reg No (VLTD)</span></div>
+          <div class="mrow"><code>odd 6 / even 6</code><span>Vehicle Reg No (Vahan)</span></div>
+        </div>
+      <p class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Your file never leaves this device. Keep the source column order consistent with the mapping above.</span></p>
+    </div>
+  </div>
+</div>
+<div class="mo" id="gsmo" role="dialog" aria-modal="true" aria-labelledby="gsTitle">
+  <div class="md" style="width:min(760px,100%)">
+    <div class="mhead">
+      <div class="xi" style="background:var(--brand-soft);color:var(--brand)">GS</div>
+      <div class="mtxt"><b id="gsTitle">Google Sheet setup</b><span>One-time setup (2 minutes). The sheet is created in your own Google Drive.</span></div>
+      <button class="mx" id="gsClose" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="gsbody">
+      <div class="gsbar"><span id="gsBarTxt">Steps 1 &amp; 2 (code + deploy) are hidden</span>
+        <button class="gseye" id="gsEye" type="button" title="Show steps 1 &amp; 2" aria-label="Show or hide steps 1 and 2" aria-pressed="false"><svg id="gsEyeIc" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg></button></div>
+      <div id="gsSteps12" class="gssteps12">
+      <div class="gsstep"><i>1</i><div><b>Copy the code</b><span>Your secret key is already filled into this code. Do not share it with anyone.</span>
+        <button class="btn ghost" id="gsCopy" type="button" style="margin-top:8px;padding:9px 14px">Copy Apps Script code</button>
+        <textarea id="gsCode" readonly spellcheck="false" rows="5"></textarea></div></div>
+      <div class="gsstep"><i>2</i><div><b>Paste it into Apps Script and deploy</b>
+        <span>In Google Drive open <b>New → Google Sheets</b>, then <b>Extensions → Apps Script</b>. Delete the old code, paste this one and Save. Then <b>Deploy → New deployment → ⚙ Web app</b>: <i class="k">Execute as: Me</i> · <i class="k">Who has access: Anyone</i> → <b>Deploy</b> → Authorize (Allow). Finally copy the <b>Web app URL</b> (…/exec).</span></div></div>
+      
+      </div>
+      <div class="gsstep"><i>3</i><div><b>Paste the Web app URL here</b>
+        <div class="gsline" style="margin-bottom:8px"><input id="gsSecretIn" type="password" placeholder="Secret key (the var SECRET = '…' in your script)" spellcheck="false" autocomplete="off"></div>
+        <div class="gsline"><input id="gsUrl" type="password" autocomplete="new-password" placeholder="https://script.google.com/macros/s/…/exec" spellcheck="false"><button class="btn primary" id="gsTest" type="button" style="padding:10px 16px">Save &amp; Test</button></div>
+        <div class="gsmsg" id="gsTestMsg"></div></div></div>
+      <div class="gsstep"><i>+</i><div><b>Connect an existing Google Sheet? (optional)</b>
+        <span>Paste the link of a sheet you already created for this project. Existing IMEIs are skipped and only new ones are uploaded.</span>
+        <div class="gsline"><input id="gsAttachIn" type="text" placeholder="https://docs.google.com/spreadsheets/d/…" spellcheck="false"><button class="btn ghost" id="gsAttachBtn" type="button" style="padding:10px 16px">Connect sheet</button></div>
+        <div class="gsmsg" id="gsAttachMsg"></div></div></div>
+    </div>
+  </div>
+</div>
+<footer><i></i><span>NIC Excel Formatter • Final output: 14-column VLTD activation register</span><i></i></footer>
 
 <script>
 const $ = id => document.getElementById(id);
@@ -504,6 +839,8 @@ const vnorm=v=>clean(v).toUpperCase().replace(/[^A-Z0-9]/g,"");
 const clean=v => v===null||v===undefined ? "" : String(v).trim();
 const EMPTY='<tr><td colspan="14" class="empty"><div class="eic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div><b>No records yet</b>Upload a NIC Excel file to see the arranged records.</td></tr>';
 
+const FI_TRASH='<button class="fitrash" type="button" title="Remove file" aria-label="Remove file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v5M14 11v5"/></svg></button>';
+$("fileinfo").addEventListener("click",e=>{if(e.target.closest(".fitrash"))clearAll();});
 function setStep(n){
   [1,2,3].forEach(i=>{const s=$("st"+i);s.classList.toggle("done",i<n);s.classList.toggle("active",i===n);
     s.querySelector(".n").textContent=i<n?"✓":i;});
@@ -525,7 +862,7 @@ function setFile(file){
   if(!/\.(xlsx|xls)$/i.test(file.name)){showMessage("Please select a valid .xlsx or .xls file.","error");return;}
   sourceFile=file;fileMeta={name:file.name,size:file.size};
   const fi=$("fileinfo");fi.classList.add("show");
-  fi.innerHTML='<div class="fi">XLS</div><div><b>'+escapeHtml(file.name)+'</b><span>'+(file.size/1024).toFixed(1)+' KB</span></div>';
+  fi.innerHTML='<div class="fi">XLS</div><div><b>'+escapeHtml(file.name)+'</b><span>'+(file.size/1024).toFixed(1)+' KB</span></div>'+FI_TRASH;
   $("process").disabled=!projReady();$("download").disabled=true;$("search").disabled=true;$("clear").disabled=false;
   $("processLabel").textContent="Process Excel File";
   finalRows=[];page=1;resetStats();render();setStep(2);
@@ -782,13 +1119,14 @@ $("mCancel").addEventListener("click",closePreview);
 $("mCancel2").addEventListener("click",closePreview);
 $("mo").addEventListener("click",e=>{if(e.target===$("mo"))closePreview();});
 
-$("clear").addEventListener("click",()=>{
+function clearAll(){
  if(apiAbort)apiAbort.abort();lookup=new Map();vmap=new Map();pairMap=new Map();$("apiTxt").textContent="";$("apiProg").style.display="none";
  sourceFile=null;fileMeta=null;finalRows=[];DB.del(stateKey()).catch(()=>{});$("file").value="";$("fileinfo").classList.remove("show");
  $("process").disabled=true;$("download").disabled=true;$("search").disabled=true;$("search").value="";
  $("processLabel").textContent="Process Excel File";$("clear").disabled=true;
  page=1;$("vfilter").value="all";resetStats();render();setStep(1);$("message").className="message";$("message").textContent="";
-});
+}
+$("clear").addEventListener("click",clearAll);
 
 /* ---- Expiry / Client lookup (optional second file, matched by IMEI) ---- */
 const imeiKey=r=>clean(r[1]).replace(/\.0+$/,"");
@@ -866,7 +1204,7 @@ async function loadLookup(file){
   const pure=ce<0&&cc<0&&cv<0&&ca<0;            // a plain registration-date template
   // IMEI + Vehicle No + date  => every row is verified against the NIC data before it is fed
   const verified=ci>=0&&cn>=0&&cr>=0;
-  if(verified&&!finalRows.length)throw new Error("Verified template: pehle NIC file process karo, phir ye file upload karo (IMEI + Vehicle No verify karne ke liye NIC data chahiye).");
+  if(verified&&!finalRows.length)throw new Error("Verified template: process the NIC file first, then upload this file (NIC data is needed to verify IMEI + Vehicle No).");
   const nicByImei=new Map(),nicByVeh=new Map();
   if(verified)finalRows.forEach(r=>{const k=imeiKey(r);if(!nicByImei.has(k))nicByImei.set(k,[]);nicByImei.get(k).push(r);[vnorm(r[5]),vnorm(r[6])].forEach(v=>{if(!v)return;if(!nicByVeh.has(v))nicByVeh.set(v,[]);nicByVeh.get(v).push(r);});});
   const pairs=new Map(),pairConf=new Set();
@@ -1079,10 +1417,10 @@ function applyApiItem(imei,o){
  lookup.set(imei,{act:toMs(o.a),exp:toMs(o.e),reg:prev.reg===undefined?"":prev.reg,client:clean(o.c),vage:clean(o.v).toUpperCase()});
 }
 async function fetchFromApi(){
- if(!finalRows.length){$("apiTxt").textContent="Pehle NIC file process karo.";$("apiProg").style.display="block";return;}
+ if(!finalRows.length){$("apiTxt").textContent="Process the NIC file first.";$("apiProg").style.display="block";return;}
  // only rows that still miss SIM expiry / client (so a re-run just retries the gaps)
  const imeis=[...new Set(finalRows.filter(r=>!clean(r[8])||!clean(r[13])).map(r=>clean(r[1]).replace(/\.0+$/,"")).filter(Boolean))];
- if(!imeis.length){$("apiTxt").innerHTML="<span class='okk'>Sab rows mein data pehle se hai.</span>";$("apiProg").style.display="block";$("apiFill").style.width="100%";return;}
+ if(!imeis.length){$("apiTxt").innerHTML="<span class='okk'>All rows already have data.</span>";$("apiProg").style.display="block";$("apiFill").style.width="100%";return;}
  const ctl=new AbortController();apiAbort=ctl;
  const total=imeis.length,t0=Date.now(),fmt=n=>n.toLocaleString("en-IN");
  const okSet=new Set(),missSet=new Set(),errSet=new Set();
@@ -1175,7 +1513,7 @@ async function fetchFromApi(){
  passDone=passTotal;paint(true);$("apiFill").style.width="100%";
  const secs=Math.max(1,Math.round((Date.now()-t0)/1000)),avg=(total/secs).toFixed(0);
  if(aborted429){
-  $("apiTxt").innerHTML="<span class='bad'>Portal API se connect nahi ho paya"+(lastErr?" ("+escapeHtml(lastErr)+")":"")+". Internet / portal access check karo, ya Raw Data file upload karo.</span>";
+  $("apiTxt").innerHTML="<span class='bad'>Could not connect to the Portal API"+(lastErr?" ("+escapeHtml(lastErr)+")":"")+". Check your internet / portal access, or upload the Raw Data file.</span>";
  }else{
   const pend=total-okSet.size-missSet.size-errSet.size;
   $("apiTxt").innerHTML=(stopped?"Stopped · ":"<span class='okk'>Done in "+secs+"s · avg "+avg+"/sec · </span>")+
@@ -1210,13 +1548,206 @@ async function restoreState(){
   finalRows=s.finalRows;workbookName=s.workbookName||"Final_Data";fileMeta=s.fileMeta||null;
   if(s.perPage){perPage=s.perPage;$("perPage").value=String(perPage);}
   setStats(...s.stats);
-  if(fileMeta){const fi=$("fileinfo");fi.classList.add("show");fi.innerHTML='<div class="fi">XLS</div><div><b>'+escapeHtml(fileMeta.name)+'</b><span>'+(fileMeta.size/1024).toFixed(1)+' KB · restored</span></div>';}
+  if(fileMeta){const fi=$("fileinfo");fi.classList.add("show");fi.innerHTML='<div class="fi">XLS</div><div><b>'+escapeHtml(fileMeta.name)+'</b><span>'+(fileMeta.size/1024).toFixed(1)+' KB • restored</span></div>'+FI_TRASH;}
   $("download").disabled=false;$("search").disabled=false;$("clear").disabled=false;
   $("processLabel").textContent="Process Excel File";
   page=1;render();setStep(3);
   showMessage("Previous data restored ("+finalRows.length.toLocaleString("en-IN")+" records). Click Clear to remove it, or upload a new file.","ok");
  }catch(e){}
 }
+/* ---- Google Sheet (through a Google Apps Script web app you deploy once) ---- */
+const GS_CODE="// NIC Excel Formatter - Google Sheet connector\n// Deploy: Deploy > New deployment > Web app > Execute as: Me > Who has access: Anyone\nvar SECRET = '__SECRET__';   // already filled in by the page - do not share this code\nvar TAB = 'Data';\n\nfunction doGet() {\n  return ContentService.createTextOutput('NIC Excel Formatter connector is running.');\n}\n\nfunction doPost(e) {\n  var res;\n  try {\n    var req = JSON.parse(e.postData.contents);\n    if (req.secret !== SECRET) throw new Error('Wrong secret key. Copy the code again from the page and redeploy.');\n    if (req.action === 'ping') res = { ok: true, v: 1 };\n    else if (req.action === 'create') res = createSheet_(req);\n    else if (req.action === 'info') res = infoSheet_(req);\n    else if (req.action === 'state') res = stateSheet_(req);\n    else if (req.action === 'append') res = appendRows_(req);\n    else throw new Error('Unknown action: ' + req.action);\n  } catch (err) {\n    res = { ok: false, error: String(err && err.message ? err.message : err) };\n  }\n  return ContentService.createTextOutput(JSON.stringify(res)).setMimeType(ContentService.MimeType.JSON);\n}\n\nfunction tab_(ss) {\n  return ss.getSheetByName(TAB) || ss.getSheets()[0];\n}\n\nfunction setup_(sh, headers) {\n  var n = headers.length;\n  if (sh.getMaxColumns() < n) sh.insertColumnsAfter(sh.getMaxColumns(), n - sh.getMaxColumns());\n  sh.getRange(1, 1, 1, n).setValues([headers]);\n  sh.getRange(1, 1, 1, n).setBackground('#0c1b33').setFontColor('#ffffff').setFontWeight('bold')\n    .setHorizontalAlignment('center').setVerticalAlignment('middle');\n  sh.setRowHeight(1, 30);\n  sh.setFrozenRows(1);\n  // everything under the header is Text (S.No stays a number), so IMEI, vehicle numbers and dates are kept exactly as sent\n  if (sh.getMaxRows() > 1 && n > 1) sh.getRange(2, 2, sh.getMaxRows() - 1, n - 1).setNumberFormat('@');\n  var widths = [70, 170, 200, 150, 130, 160, 160, 150, 140, 140, 110, 170, 150, 260];\n  for (var i = 0; i < n; i++) sh.setColumnWidth(i + 1, widths[i] || 150);\n  if (!sh.getFilter()) sh.getRange(1, 1, Math.max(2, sh.getMaxRows()), n).createFilter();\n}\n\nfunction createSheet_(req) {\n  var ss = SpreadsheetApp.create(req.title || 'VLTD Activation Data');\n  var sh = ss.getSheets()[0];\n  sh.setName(TAB);\n  setup_(sh, req.headers);\n  return { ok: true, id: ss.getId(), url: ss.getUrl(), name: ss.getName(), rows: 0 };\n}\n\nfunction infoSheet_(req) {\n  var ss = SpreadsheetApp.openById(req.id);\n  var sh = tab_(ss);\n  if (sh.getLastRow() === 0) {\n    setup_(sh, req.headers);\n  } else {\n    var h = sh.getRange(1, 1, 1, req.headers.length).getValues()[0];\n    if (String(h[1]).trim() !== req.headers[1] || String(h[0]).trim() !== req.headers[0])\n      throw new Error('This sheet does not look like the NIC register (header row differs). Use a sheet created from the page.');\n  }\n  return { ok: true, id: ss.getId(), url: ss.getUrl(), name: ss.getName(), rows: Math.max(0, sh.getLastRow() - 1) };\n}\n\nfunction stateSheet_(req) {\n  var sh = tab_(SpreadsheetApp.openById(req.id));\n  var last = sh.getLastRow();\n  var imeis = [];\n  if (last > 1) {\n    var v = sh.getRange(2, 2, last - 1, 1).getValues();\n    for (var i = 0; i < v.length; i++) {\n      var s = String(v[i][0]).trim();\n      if (s) imeis.push(s);\n    }\n  }\n  return { ok: true, lastRow: last, imeis: imeis };\n}\n\nfunction appendRows_(req) {\n  var lock = LockService.getScriptLock();\n  lock.waitLock(30000);\n  try {\n    var sh = tab_(SpreadsheetApp.openById(req.id));\n    var last = sh.getLastRow();\n    if (last !== req.expectLast)\n      throw new Error('The sheet changed while uploading (expected ' + req.expectLast + ' rows, found ' + last + '). Nothing was added by this step - upload again.');\n    var rows = req.rows || [];\n    if (!rows.length) return { ok: true, added: 0, lastRow: last };\n    var n = rows[0].length;\n    var need = last + rows.length;\n    if (sh.getMaxRows() < need) sh.insertRowsAfter(sh.getMaxRows(), need - sh.getMaxRows());\n    var rng = sh.getRange(last + 1, 1, rows.length, n);\n    if (n > 1) rng.offset(0, 1, rows.length, n - 1).setNumberFormat('@');\n    rng.setValues(rows);\n    SpreadsheetApp.flush();\n    return { ok: true, added: rows.length, lastRow: last + rows.length };\n  } finally {\n    lock.releaseLock();\n  }\n}\n";
+const GS_CHUNK=500;
+const gsLS={get(k){try{return localStorage.getItem(k);}catch(e){return null;}},set(k,v){try{localStorage.setItem(k,v);}catch(e){}}};
+const GS_DEFAULT_URL="https://script.google.com/macros/s/AKfycbzdDHSZ0zj878jzAEmvegqCXrl-psbIJObQaDn6Z92L905e1EhzXaLHyQ6-6EzDoPFi/exec";
+const GS_DEFAULT_SECRET="watsoodks";
+let gsCfg=(()=>{let c={};try{c=JSON.parse(gsLS.get("gsCfg")||"null")||{};}catch(e){}
+ /* fixed defaults unless the user saved their own in the setup popup */
+ if(!c.custom){c.url=GS_DEFAULT_URL;c.secret=GS_DEFAULT_SECRET;}return c;})();
+const gsSave=()=>gsLS.set("gsCfg",JSON.stringify(gsCfg));
+const gsKey=()=>"gsSheet_"+PROJ_ID;
+const gsSheet=()=>{try{return JSON.parse(gsLS.get(gsKey())||"null");}catch(e){return null;}};
+const gsReady=()=>!!(gsCfg.url&&gsCfg.secret);
+let gsBusy=false;
+function gsSecret(){
+ if(!gsCfg.secret){const a=new Uint8Array(20);crypto.getRandomValues(a);gsCfg.secret=Array.from(a,x=>x.toString(36).padStart(2,"0")).join("").slice(0,30);gsSave();}
+ return gsCfg.secret;
+}
+async function gsCall(action,payload,timeoutMs){
+ if(!gsReady())throw new Error("Please complete the setup first (Apps Script URL).");
+ const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),timeoutMs||120000);
+ let res;
+ try{res=await fetch(gsCfg.url,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(Object.assign({secret:gsCfg.secret,action},payload)),signal:ctl.signal});}
+ catch(e){throw new Error(ctl.signal.aborted?"Google did not respond in time.":"Could not connect to Google Apps Script. Check the URL and your internet connection.");}
+ finally{clearTimeout(t);}
+ let j;try{j=await res.json();}catch(e){throw new Error("Did not get a valid response from Apps Script. Deploy with 'Who has access: Anyone' and paste the Web app URL (…/exec).");}
+ if(!j||!j.ok)throw new Error((j&&j.error)||"Unknown error");
+ return j;
+}
+function gsInfo(html,cls){const b=$("gsInfo");b.className="lkinfo "+(cls||"");b.innerHTML=html;}
+let gsuTimer=null;
+function gsuOpen(state){$("gsu").className="gsu show "+state;}
+function gsuClose(){clearTimeout(gsuTimer);gsuTimer=null;$("gsu").className="gsu";}
+function gsuProg(pct,txt){
+ clearTimeout(gsuTimer);if(!$("gsu").classList.contains("spin"))gsuOpen("spin");
+ const ind=!(pct>=5);$("gsuBar").classList.toggle("ind",ind);
+ $("gsuBar").style.strokeDashoffset=ind?"":String(264*(1-Math.min(100,pct)/100));
+ $("gsuPct").textContent=ind?"":Math.round(pct)+"%";
+ $("gsuT").textContent="Uploading to Google Sheet…";$("gsuS").textContent=txt||"";$("gsuFill").style.width=(pct||0)+"%";
+}
+function gsuFinish(state,title,sub,auto){
+ gsuOpen(state);$("gsuT").textContent=title;$("gsuS").innerHTML=sub||"";
+ clearTimeout(gsuTimer);if(auto)gsuTimer=setTimeout(gsuClose,2400);
+}
+$("gsuClose").addEventListener("click",gsuClose);
+function gsProgress(show,pct,txt){$("gsProg").style.display=show?"block":"none";$("gsFill").style.width=(pct||0)+"%";$("gsTxt").textContent=txt||"";if(show)gsuProg(pct,txt);else if($("gsu").classList.contains("spin"))gsuClose();}
+function setGsBusy(b){gsBusy=b;["gsCreate","gsUpload","gsSetup"].forEach(id=>{$(id).disabled=b;});}
+let gsCpTimer=null;
+async function gsCopyLink(){
+ const u=($("gsLinkTxt").value||"").trim();if(!u)return;
+ try{await navigator.clipboard.writeText(u);}catch(e){const t=$("gsLinkTxt");t.select();try{document.execCommand("copy");}catch(_){}t.setSelectionRange(0,0);}
+ const b=$("gsCopyBox");b.classList.remove("ok");void b.offsetWidth;b.classList.add("ok");$("gsLinkCp").title="Copied";
+ clearTimeout(gsCpTimer);gsCpTimer=setTimeout(()=>{b.classList.remove("ok");$("gsLinkCp").title="Copy link";},2000);
+}
+$("gsLinkCp").addEventListener("click",gsCopyLink);
+$("gsLinkTxt").addEventListener("focus",e=>e.target.select());
+function paintGs(){
+ const sh=gsSheet(),st=$("gsStatus"),ln=$("gsLink");
+ if(!gsReady()){st.textContent="Setup needed";st.className="gsst off";}
+ else if(!sh){st.textContent="No sheet yet";st.className="gsst warn";}
+ else{st.textContent=sh.name;st.className="gsst on";}
+ if(sh){ln.href=sh.url;$("gsLinkTxt").value=sh.url;$("gsLRow").style.display="flex";$("gsCopyBox").classList.remove("ok");}else $("gsLRow").style.display="none";
+ gsInfo("");gsProgress(false);
+}
+const gsRow=r=>r.slice(0,NCOL).map((v,i)=>{
+ if(i===0&&/^\d+$/.test(clean(v)))return Number(clean(v));
+ if((i===5||i===6)&&!clean(v))return "Not Mapped";
+ return clean(v);
+});
+async function gsCreate(){
+ if(!gsReady()){openGsSetup();return;}
+ const cur=gsSheet();
+ if(cur&&!confirm("A sheet is already connected to this project:\n\n"+cur.name+"\n\nCreate a new Google Sheet? (The old sheet stays in your Drive.)"))return;
+ const title=prompt("Google Sheet name:",curProj().name+" VLTD Activation Data");
+ if(!title||!title.trim())return;
+ setGsBusy(true);gsInfo("Creating Google Sheet…");
+ try{
+  const j=await gsCall("create",{title:title.trim(),headers});
+  gsLS.set(gsKey(),JSON.stringify({id:j.id,url:j.url,name:j.name}));
+  paintGs();
+  gsInfo("<b>Google Sheet created:</b> "+escapeHtml(j.name)+". Now click <b>Upload to Google Sheet</b>; the first upload sends all the data.","okk");
+ }catch(e){gsInfo(escapeHtml(e.message),"bad");}
+ setGsBusy(false);
+}
+async function gsUpload(){
+ if(!gsReady()){openGsSetup();return;}
+ const sh=gsSheet();
+ if(!sh){gsInfo("Click <b>Create Google Sheet</b> first (or connect an existing sheet in Setup).","bad");return;}
+ if(!finalRows.length){gsInfo("Process the NIC file first, then upload.","bad");return;}
+ if(apiAbort){gsInfo("Portal fetch is still running. Let it finish, then upload.","bad");return;}
+ setGsBusy(true);gsInfo("");
+ const fmt=n=>n.toLocaleString("en-IN");
+ try{
+  gsProgress(true,2,"Reading existing IMEIs from the sheet…");
+  const st=await gsCall("state",{id:sh.id});
+  const existing=new Set(st.imeis);
+  const data=finalRows.map(r=>({k:imeiKey(r),v:gsRow(r)}));
+  const fresh=data.filter(x=>!existing.has(x.k));
+  const skipped=data.length-fresh.length;
+  const skippedImeis=new Set(data.filter(x=>existing.has(x.k)).map(x=>x.k)).size;
+  if(!fresh.length){gsProgress(false);gsuFinish("info","No new IMEIs","All "+fmt(data.length)+" rows already exist in the sheet by IMEI, so nothing was uploaded.",true);gsInfo("No new IMEIs found. All <b>"+fmt(data.length)+"</b> rows already exist in the sheet by IMEI, so nothing was uploaded.","warn");setGsBusy(false);return;}
+  const noData=fresh.filter(x=>!x.v[8]||!x.v[13]).length;
+  if(noData&&!confirm(noData+" new rows have no SIM Expiry / Client Name yet (no portal data).\n\nExisting IMEIs are never updated later, so these rows will go to the sheet as they are.\n\nUpload anyway?\n(Better: Cancel and run 'Fetch from Portal API' first.)")){gsProgress(false);setGsBusy(false);return;}
+  // chunks never split rows of one IMEI
+  const chunks=[];let i=0;
+  while(i<fresh.length){let e=Math.min(i+GS_CHUNK,fresh.length);const seen=new Set(fresh.slice(i,e).map(x=>x.k));while(e<fresh.length&&seen.has(fresh[e].k)){seen.add(fresh[e].k);e++;}chunks.push(fresh.slice(i,e));i=e;}
+  let last=st.lastRow,sent=0;
+  for(let c=0;c<chunks.length;c++){
+   const rows=chunks[c].map(x=>x.v);
+   try{
+    const j=await gsCall("append",{id:sh.id,expectLast:last,rows},180000);
+    last=j.lastRow;
+   }catch(err){
+    // the rows may have landed even though the answer was lost: check before failing
+    let landed=false;
+    try{const s2=await gsCall("state",{id:sh.id});landed=(s2.lastRow===last+rows.length);if(landed)last=s2.lastRow;}catch(_){}
+    if(!landed)throw new Error(err.message+" ("+fmt(sent)+" rows were already uploaded; uploading again will send only the remaining rows.)");
+   }
+   sent+=rows.length;
+   gsProgress(true,Math.round(sent/fresh.length*100),"Uploading… "+fmt(sent)+" / "+fmt(fresh.length)+" rows");
+  }
+  const meta=gsSheet()||{};meta.rows=last-1;gsLS.set(gsKey(),JSON.stringify(meta));
+  const newImeis=new Set(fresh.map(x=>x.k)).size;
+  gsProgress(true,100,"Done");
+  const doneSub="<b>"+fmt(fresh.length)+"</b> rows uploaded ("+fmt(newImeis)+" new IMEIs)"+(skipped?" · "+fmt(skippedImeis)+" existing IMEIs skipped":" · full data sent for the first time");
+  setTimeout(()=>gsuFinish("done","Upload complete!",doneSub,true),450);
+  gsInfo("<b>"+fmt(fresh.length)+" rows uploaded</b> ("+fmt(newImeis)+" new IMEIs)"+(skipped?" · "+fmt(skippedImeis)+" existing IMEIs ("+fmt(skipped)+" rows) skipped":" · full data sent for the first time")+" · the sheet now has "+fmt(last-1)+" rows.","okk");
+ }catch(e){gsProgress(false);gsuFinish("bad","Upload failed",escapeHtml(e.message),false);gsInfo(escapeHtml(e.message),"bad");}
+ setGsBusy(false);
+}
+/* setup popup */
+let gsCodeFull="",gsCodeShow=false;
+const GS_EYE_ON='<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/>',
+      GS_EYE_OFF='<path d="M17.94 17.94A10.9 10.9 0 0 1 12 19c-7 0-11-7-11-7a19.8 19.8 0 0 1 5.06-5.94M9.9 4.24A10.7 10.7 0 0 1 12 4c7 0 11 7 11 7a19.7 19.7 0 0 1-3.17 4.19M14.12 14.12a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/>';
+function paintGsCode(){
+ $("gsCode").value=gsCodeShow?gsCodeFull:"";
+ $("gsSteps12").hidden=!gsCodeShow;
+ $("gsBarTxt").textContent=gsCodeShow?"Steps 1 & 2 (code + deploy) are shown":"Steps 1 & 2 (code + deploy) are hidden";
+ $("gsEyeIc").innerHTML=gsCodeShow?GS_EYE_OFF:GS_EYE_ON;
+ $("gsEye").title=gsCodeShow?"Hide steps 1 & 2":"Show steps 1 & 2";
+ $("gsEye").setAttribute("aria-pressed",String(gsCodeShow));
+}
+$("gsEye").addEventListener("click",()=>{gsCodeShow=!gsCodeShow;paintGsCode();});
+function openGsSetup(){
+ $("gsSecretIn").value=gsSecret();
+ gsCodeFull=GS_CODE.replace("__SECRET__",gsSecret());gsCodeShow=false;paintGsCode();
+ $("gsUrl").value=gsCfg.url||"";
+ $("gsTestMsg").textContent="";$("gsTestMsg").className="gsmsg";
+ $("gsAttachIn").value="";$("gsAttachMsg").textContent="";$("gsAttachMsg").className="gsmsg";
+ $("gsmo").classList.add("show");
+}
+function closeGsSetup(){$("gsmo").classList.remove("show");}
+async function gsSaveTest(){
+ const url=$("gsUrl").value.trim(),m=$("gsTestMsg");
+ if(!/^https:\/\/script\.google\.com\/(macros\/s\/[^\/]+|a\/[^\/]+\/macros\/s\/[^\/]+)\/exec$/.test(url)){m.className="gsmsg bad";m.textContent="URL aisa hona chahiye: https://script.google.com/macros/s/…/exec";return;}
+ const sec=$("gsSecretIn").value.trim();
+ if(!/^[A-Za-z0-9]{8,64}$/.test(sec)){m.className="gsmsg bad";m.textContent="The secret key must be letters and numbers only, at least 8 characters.";return;}
+ gsCfg.secret=sec;gsCfg.custom=true;
+ gsCfg.url=url;gsSave();m.className="gsmsg";m.textContent="Testing…";
+ try{await gsCall("ping",{},30000);m.className="gsmsg okk";m.textContent="✓ Connected. You can now use Create Google Sheet.";paintGs();}
+ catch(e){m.className="gsmsg bad";m.textContent=e.message+" (If you changed the code, use 'Deploy > Manage deployments > Edit > New version'.)";}
+}
+async function gsAttach(){
+ const raw=$("gsAttachIn").value.trim(),m=$("gsAttachMsg");
+ const id=(raw.match(/\/d\/([A-Za-z0-9_-]{20,})/)||raw.match(/^([A-Za-z0-9_-]{20,})$/)||[])[1];
+ if(!id){m.className="gsmsg bad";m.textContent="Paste the Google Sheet link or ID.";return;}
+ if(!gsReady()){m.className="gsmsg bad";m.textContent="Save the Apps Script URL above first.";return;}
+ m.className="gsmsg";m.textContent="Checking the sheet…";
+ try{
+  const j=await gsCall("info",{id,headers},60000);
+  gsLS.set(gsKey(),JSON.stringify({id:j.id,url:j.url,name:j.name,rows:j.rows}));
+  m.className="gsmsg okk";m.textContent="✓ Connected: "+j.name+" ("+j.rows.toLocaleString("en-IN")+" rows already). Existing IMEIs will be skipped and only new ones uploaded.";paintGs();
+ }catch(e){m.className="gsmsg bad";m.textContent=e.message;}
+}
+$("gsSetup").addEventListener("click",openGsSetup);
+$("setOpen").addEventListener("click",()=>$("setmo").classList.add("show"));
+const closeSettings=()=>$("setmo").classList.remove("show");
+$("setClose").addEventListener("click",closeSettings);
+$("setmo").addEventListener("click",e=>{if(e.target===$("setmo"))closeSettings();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSettings();});
+$("gsCreate").addEventListener("click",gsCreate);
+$("gsUpload").addEventListener("click",gsUpload);
+$("gsClose").addEventListener("click",closeGsSetup);
+$("gsmo").addEventListener("click",e=>{if(e.target===$("gsmo"))closeGsSetup();});
+$("gsTest").addEventListener("click",gsSaveTest);
+$("gsAttachBtn").addEventListener("click",gsAttach);
+$("gsCopy").addEventListener("click",async()=>{
+ const t=gsCodeFull;
+ try{await navigator.clipboard.writeText(t);}catch(e){const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();}
+ $("gsCopy").textContent="✓ Copied";setTimeout(()=>{$("gsCopy").textContent="Copy Apps Script code";},1800);
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeGsSetup();});
+
 /* ---- Project selector (NIC is the only configured layout so far) ---- */
 const PROJECTS=[
  {id:"nic",name:"NIC",ready:true},
@@ -1233,7 +1764,8 @@ function stateKey(){return PROJ_ID==="nic"?"state":"state_"+PROJ_ID;}
 function paintProject(){
  const pr=curProj();
  $("pname").textContent=pr.name;
- $("brandName").textContent=pr.name+" Excel Formatter";
+ paintGs();
+ $("brandName").innerHTML="<em>"+escapeHtml(pr.name)+"</em> Excel Formatter";
  document.title=pr.name+" Excel Formatter | VLTD Activation Data";
  $("pmenu").innerHTML=PROJECTS.map(x=>'<button type="button" class="po'+(x.id===PROJ_ID?' sel':'')+'" role="option" data-id="'+x.id+'"><i class="pc"></i>'+escapeHtml(x.name)+(x.ready?'':'<em>Not set up</em>')+'</button>').join("");
 }
@@ -1250,7 +1782,7 @@ function switchProject(id){
  $("apiTxt").textContent="";$("apiProg").style.display="none";
  $("message").className="message";$("message").textContent="";
  resetStats();render();setStep(1);paintProject();
- if(!projReady())showMessage(curProj().name+" ka source column mapping abhi set nahi hai. Mapping milte hi yahan add ho jaayegi; tab tak NIC use karo.","error");
+ if(!projReady())showMessage(curProj().name+" source column mapping is not set up yet. It will be added here once the mapping is available; use NIC until then.","error");
  else restoreState();
 }
 $("pbtn").addEventListener("click",e=>{e.stopPropagation();setPMenu(!$("psel").classList.contains("open"));});
@@ -1259,7 +1791,7 @@ document.addEventListener("click",e=>{if(!$("psel").contains(e.target))setPMenu(
 document.addEventListener("keydown",e=>{if(e.key==="Escape")setPMenu(false);});
 paintProject();
 resetStats();render();
-if(projReady())restoreState();else showMessage(curProj().name+" ka source column mapping abhi set nahi hai. Mapping milte hi yahan add ho jaayegi; tab tak NIC use karo.","error");
+if(projReady())restoreState();else showMessage(curProj().name+" source column mapping is not set up yet. It will be added here once the mapping is available; use NIC until then.","error");
 </script>
 </body>
 </html>
